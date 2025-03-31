@@ -77,19 +77,21 @@ const Blog = () => {
             transition={{ delay: index * 0.2 }}
             className="h-full"
           >
-            <Card className="h-full">
-              <a
-                href={post.link}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="block h-full"
-              >
+            <a
+              href={post.link}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="block h-full"
+            >
+              <Card className="h-full group hover:bg-secondary/5 transition-colors duration-300">
                 <div className="flex flex-col h-full space-y-4">
                   <div>
-                    <h3 className="text-2xl font-bold text-secondary hover:text-secondary/80 transition-colors line-clamp-2">
+                    <h3 className="text-2xl font-bold text-secondary group-hover:text-secondary/90 transition-colors line-clamp-2">
                       {post.title}
                     </h3>
-                    <p className="text-gray-300 mt-2 line-clamp-3">{post.excerpt}</p>
+                    <p className="text-gray-300 mt-2 line-clamp-3 group-hover:text-gray-200 transition-colors">
+                      {post.excerpt}
+                    </p>
                   </div>
                   <div className="flex justify-between text-sm text-gray-400 mt-auto">
                     <span>{post.date}</span>
@@ -99,15 +101,15 @@ const Blog = () => {
                     {post.tags.map((tag, tagIndex) => (
                       <span
                         key={tagIndex}
-                        className="px-3 py-1 bg-secondary/10 text-secondary rounded-full text-sm"
+                        className="px-3 py-1 bg-secondary/10 text-secondary rounded-full text-sm group-hover:bg-secondary/20 transition-colors"
                       >
                         {tag}
                       </span>
                     ))}
                   </div>
                 </div>
-              </a>
-            </Card>
+              </Card>
+            </a>
           </motion.div>
         ))}
       </div>
