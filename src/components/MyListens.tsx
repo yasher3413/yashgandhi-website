@@ -23,7 +23,7 @@ const MyListens = () => {
           <Card>
             <div className="space-y-4">
               <h3 className="text-2xl font-bold text-secondary">Current Playlist</h3>
-              <p className="text-gray-400">A collection of my favorite Zach Bryan tracks</p>
+              <p className="text-gray-400">A collection of my favorite country tracks</p>
               <div className="relative aspect-square w-full">
                 <iframe
                   src="https://open.spotify.com/embed/playlist/2wXpQnxQ728idZVsXN24AI"
