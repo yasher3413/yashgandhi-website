@@ -13,7 +13,10 @@ visitor@yashgandhi:~$ skills
 
 visitor@yashgandhi:~$ hobbies
 > 🏒 Hockey | ⛳ Golf | 🏎️ F1 | ✈️ Travelling
- `;
+
+visitor@yashgandhi:~$ exit
+> Exiting...
+> [Process completed]`;
   
   const startTyping = () => {
     let i = 0;
