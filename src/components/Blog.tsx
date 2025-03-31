@@ -86,7 +86,7 @@ const Blog = () => {
               <Card className="h-full group hover:bg-secondary/5 transition-colors duration-300">
                 <div className="flex flex-col h-full space-y-4">
                   <div>
-                    <h3 className="text-2xl font-bold text-secondary group-hover:text-secondary/90 transition-colors line-clamp-2">
+                    <h3 className="text-2xl font-bold text-secondary group-hover:text-primary transition-colors line-clamp-2">
                       {post.title}
                     </h3>
                     <p className="text-gray-300 mt-2 line-clamp-3 group-hover:text-gray-200 transition-colors">
