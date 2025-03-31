@@ -94,14 +94,14 @@ export default function Home() {
           <section id="experience">
             <Experience />
           </section>
+          <section id="projects">
+            <Projects />
+          </section>
           <section id="blog">
             <Blog />
           </section>
           <section id="listens">
             <MyListens />
-          </section>
-          <section id="projects">
-            <Projects />
           </section>
           <section id="contact">
             <Contact />
