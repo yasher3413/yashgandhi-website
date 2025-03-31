@@ -1,0 +1,71 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-primary text-gray-300;
+  }
+}
+
+@layer components {
+  .nav-link {
+    @apply text-gray-300 hover:text-secondary transition-colors;
+  }
+  
+  .section-title {
+    @apply text-4xl font-bold mb-8 text-secondary;
+  }
+  
+  .gradient-text {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-secondary to-purple-500 animate-gradient;
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-primary;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-secondary/20 rounded-full hover:bg-secondary/30 transition-colors;
+}
+
+/* Custom cursor */
+.cursor {
+  @apply fixed w-8 h-8 bg-secondary/20 rounded-full pointer-events-none z-50 mix-blend-difference;
+  transform: translate(-50%, -50%);
+}
+
+/* Animation delays */
+.animation-delay-2000 {
+  animation-delay: 2s;
+}
+
+.animation-delay-4000 {
+  animation-delay: 4s;
+}
+
+/* Blob animation */
+@keyframes blob {
+  0% {
+    transform: translate(0px, 0px) scale(1);
+  }
+  33% {
+    transform: translate(30px, -50px) scale(1.1);
+  }
+  66% {
+    transform: translate(-20px, 20px) scale(0.9);
+  }
+  100% {
+    transform: translate(0px, 0px) scale(1);
+  }
+}
+
+.animate-blob {
+  animation: blob 7s infinite;
+} 
