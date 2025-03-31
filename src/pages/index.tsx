@@ -10,6 +10,7 @@ import Contact from '../components/Contact';
 import Navigation from '../components/Navigation';
 import ParticleBackground from '../components/ParticleBackground';
 import MyListens from '../components/MyListens';
+import Projects from '../components/Projects';
 
 export default function Home() {
   const [mounted, setMounted] = useState(false);
@@ -93,6 +94,9 @@ export default function Home() {
           </section>
           <section id="listens">
             <MyListens />
+          </section>
+          <section id="projects">
+            <Projects />
           </section>
           <section id="contact">
             <Contact />
