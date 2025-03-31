@@ -11,6 +11,7 @@ import Navigation from '../components/Navigation';
 import ParticleBackground from '../components/ParticleBackground';
 import MyListens from '../components/MyListens';
 import Projects from '../components/Projects';
+import BackToTop from '../components/BackToTop';
 
 export default function Home() {
   const [mounted, setMounted] = useState(false);
@@ -77,31 +78,35 @@ export default function Home() {
           translateY: "-50%",
         }}
       />
-      <main className="min-h-screen">
-        <section id="home">
-          <Terminal />
-          <Hero />
-        </section>
-        <div className="container mx-auto px-4 space-y-4">
-          <section id="about">
-            <About />
+      <main className="relative min-h-screen bg-background text-foreground">
+        <Navigation />
+        <div className="relative z-10 pt-20 pb-16 space-y-16">
+          <section id="home">
+            <Terminal />
+            <Hero />
           </section>
-          <section id="experience">
-            <Experience />
-          </section>
-          <section id="blog">
-            <Blog />
-          </section>
-          <section id="listens" className="relative">
-            <MyListens />
-          </section>
-          <section id="projects" className="relative">
-            <Projects />
-          </section>
-          <section id="contact" className="relative">
-            <Contact />
-          </section>
+          <div className="container mx-auto px-4 space-y-4">
+            <section id="about">
+              <About />
+            </section>
+            <section id="experience">
+              <Experience />
+            </section>
+            <section id="blog">
+              <Blog />
+            </section>
+            <section id="listens" className="relative">
+              <MyListens />
+            </section>
+            <section id="projects" className="relative">
+              <Projects />
+            </section>
+            <section id="contact" className="relative">
+              <Contact />
+            </section>
+          </div>
         </div>
+        <BackToTop />
       </main>
     </>
   );
