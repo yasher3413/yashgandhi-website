@@ -20,21 +20,21 @@ const About = () => {
             <div className="space-y-2">
               <h3 className="text-secondary font-semibold">Skills</h3>
               <ul className="space-y-1 text-gray-400">
-                <li>JavaScript/TypeScript</li>
+                <li>JS/TypeScript</li>
                 <li>React/Next.js</li>
                 <li>Node.js</li>
-                <li>AWS</li>
                 <li>Python</li>
+                <li>Figma</li>
               </ul>
             </div>
             <div className="space-y-2">
               <h3 className="text-secondary font-semibold">Interests</h3>
               <ul className="space-y-1 text-gray-400">
-                <li>Web Development</li>
-                <li>Cloud Computing</li>
-                <li>Machine Learning</li>
-                <li>Figma</li>
-                <li>Photoshop</li>
+                <li>Hockey</li>
+                <li>Travelling</li>
+                <li>Music</li>
+                <li>Weightlifting</li>
+                <li>Golf</li>
               </ul>
             </div>
           </div>
