@@ -11,12 +11,17 @@ import Navigation from '../components/Navigation';
 import ParticleBackground from '../components/ParticleBackground';
 import MyListens from '../components/MyListens';
 import Projects from '../components/Projects';
+import BackToTop from '../components/BackToTop';
 
 export default function Home() {
   const [mounted, setMounted] = useState(false);
   const cursorX = useMotionValue(-100);
   const cursorY = useMotionValue(-100);
-  const springConfig = { damping: 25, stiffness: 400 };
+  const springConfig = { 
+    damping: 25, 
+    stiffness: 500,
+    mass: 0.1
+  };
   const cursorXSpring = useSpring(cursorX, springConfig);
   const cursorYSpring = useSpring(cursorY, springConfig);
 
@@ -102,6 +107,7 @@ export default function Home() {
             <Contact />
           </section>
         </div>
+        <BackToTop />
       </main>
     </>
   );
