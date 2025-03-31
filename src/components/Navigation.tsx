@@ -122,29 +122,7 @@ const Navigation = () => {
           </ul>
         </div>
       </nav>
-      <nav className="hidden md:flex space-x-8">
-        <a href="#home" className="text-gray-300 hover:text-secondary transition-colors">
-          Home
-        </a>
-        <a href="#about" className="text-gray-300 hover:text-secondary transition-colors">
-          About
-        </a>
-        <a href="#experience" className="text-gray-300 hover:text-secondary transition-colors">
-          Experience
-        </a>
-        <a href="#projects" className="text-gray-300 hover:text-secondary transition-colors">
-          Projects
-        </a>
-        <a href="#blog" className="text-gray-300 hover:text-secondary transition-colors">
-          Blog
-        </a>
-        <a href="#listens" className="text-gray-300 hover:text-secondary transition-colors">
-          Listens
-        </a>
-        <a href="#contact" className="text-gray-300 hover:text-secondary transition-colors">
-          Contact
-        </a>
-      </nav>
+     
     </>
   );
 };

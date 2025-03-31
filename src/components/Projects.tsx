@@ -1,6 +1,7 @@
-import { motion } from "framer-motion";
-import Link from "next/link";
-import Card from "./Card";
+import React from 'react';
+import { motion } from 'framer-motion';
+import Card from './Card';
+import Link from 'next/link';
 
 const Projects = () => {
   const projects = [
@@ -36,7 +37,7 @@ const Projects = () => {
           Projects
         </h2>
         <p className="text-gray-300 text-lg mb-8">
-          Here are some of my recent projects. Click on the GitHub icon to view the repository.
+          Here are some of my recent projects. Click on a project to view its GitHub repository.
         </p>
       </motion.div>
 
