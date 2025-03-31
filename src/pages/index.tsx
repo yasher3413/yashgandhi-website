@@ -46,8 +46,8 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>Yash Gandhi | Student | Writer | Designer | Developer</title>
-        <meta name="description" content="Personal website of Yash Gandhi - a student, writer, designer, and developer based in Toronto, Canada." />
+        <title>Yash Gandhi</title>
+        <meta name="description" content="Personal website of Yash Gandhi" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
