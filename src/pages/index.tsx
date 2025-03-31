@@ -10,6 +10,7 @@ import Contact from '../components/Contact';
 import Navigation from '../components/Navigation';
 import ParticleBackground from '../components/ParticleBackground';
 import MyListens from '../components/MyListens';
+import Projects from '../components/Projects';
 
 export default function Home() {
   const [mounted, setMounted] = useState(false);
@@ -91,10 +92,13 @@ export default function Home() {
           <section id="blog">
             <Blog />
           </section>
-          <section id="listens">
+          <section id="listens" className="relative">
             <MyListens />
           </section>
-          <section id="contact">
+          <section id="projects" className="relative">
+            <Projects />
+          </section>
+          <section id="contact" className="relative">
             <Contact />
           </section>
         </div>
