@@ -12,6 +12,7 @@ const Experience = () => {
       description: 'Seed-stage startup focused on creating a free-to-play sports betting platform for users to win cash prizes without any risk.',
       technologies: ['React', 'TypeScript', 'Node.js', 'Airtable'],
       logo: '/images/hottakes-logo.jpeg',
+      website: 'https://hottakes.com/'
     },
     {
       title: 'Private Equity Analyst',
@@ -20,6 +21,7 @@ const Experience = () => {
       description: 'Contributed to due diligence reports for potential acquisitions, including financial modeling and market research.',
       technologies: ['MS Excel', 'MS Word', 'MS PowerPoint'],
       logo: '/images/lynwood-logo.png',
+      website: 'https://www.linkedin.com/company/lynwood-succession/'
     },
     // Add more experiences as needed
   ];
@@ -42,6 +44,7 @@ const Experience = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: index * 0.2 }}
+            className="relative"
           >
             <Card>
               <div className="space-y-4">
@@ -71,6 +74,19 @@ const Experience = () => {
                     </span>
                   ))}
                 </div>
+                <motion.a 
+                  whileHover={{ 
+                    scale: 1.05,
+                    x: 5
+                  }}
+                  transition={{ type: "spring", stiffness: 400, damping: 10 }}
+                  href={exp.website}
+                  target="_blank"
+                  rel="noopener noreferrer" 
+                  className="inline-block mt-4 px-4 py-2 bg-secondary/10 hover:bg-secondary/20 text-secondary rounded-lg transition-all duration-200 ease-in-out hover:shadow-lg relative z-10"
+                >
+                  Visit Site →
+                </motion.a>
               </div>
             </Card>
           </motion.div>
