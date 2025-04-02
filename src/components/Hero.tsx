@@ -43,7 +43,7 @@ const Hero = () => {
           className="mt-8 flex flex-col sm:flex-row gap-4 justify-center px-4"
         >
           <a 
-            href="/Yash%20Gandhi%20Resume%20%E2%80%93%202025.pdf"
+            href="/Yash_Gandhi_Resume.pdf"
             target="_blank"
             rel="noopener noreferrer" 
             className="px-6 py-3 bg-secondary/10 border border-secondary rounded-full hover:bg-secondary/20 transition-all duration-300 text-secondary text-sm md:text-base"
