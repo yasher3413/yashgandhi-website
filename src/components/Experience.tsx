@@ -6,6 +6,15 @@ import Image from 'next/image';
 const Experience = () => {
   const experiences = [
     {
+      title: 'Vertical Operations Intern',
+      company: 'Super.com',
+      period: '(Incoming) Summer 2025',
+      description: 'Series C startup serving as a saving app that empowers users to spend less, save more, and build credit.',
+      technologies: ['Operations', 'Analytics', 'Strategy'],
+      logo: '/images/super-logo.png',
+      website: 'https://super.com'
+    },
+    {
       title: 'Senior Product & Operations',
       company: 'HotTakes',
       period: '2023 - Present',
@@ -36,7 +45,7 @@ const Experience = () => {
       >
         Experience
       </motion.h2>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <div className="grid grid-cols-1 gap-8">
         {experiences.map((exp, index) => (
           <motion.div
             key={index}
