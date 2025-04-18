@@ -30,7 +30,7 @@ const Experience = () => {
       description: 'Contributed to due diligence reports for potential acquisitions, including financial modeling and market research.',
       technologies: ['MS Excel', 'MS Word', 'MS PowerPoint'],
       logo: '/images/lynwood-logo.png',
-      website: 'https://www.linkedin.com/company/lynwood-succession/'
+      website: 'https://www.cbinsights.com/company/lynwood-succession'
     },
     // Add more experiences as needed
   ];
