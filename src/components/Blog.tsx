@@ -1,24 +1,40 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { motion } from 'framer-motion';
 import Card from './Card';
 
 const Blog = () => {
+  useEffect(() => {
+    // Load the Supascribe script
+    const script = document.createElement('script');
+    script.src = 'https://js.supascribe.com/v1/loader/OOrslRai49giI5etUxsYoWK1PlR2.js';
+    script.async = true;
+    document.head.appendChild(script);
+
+    return () => {
+      // Cleanup script on component unmount
+      const existingScript = document.querySelector('script[src="https://js.supascribe.com/v1/loader/OOrslRai49giI5etUxsYoWK1PlR2.js"]');
+      if (existingScript) {
+        document.head.removeChild(existingScript);
+      }
+    };
+  }, []);
+
   const blogPosts = [
     {
-      title: 'The Illusion of Maximization',
-      excerpt: 'Why We Think We\'re Making the Best Choices (But Aren\'t)',
-      date: 'Feb 28, 2025',
-      readTime: '8 min read',
-      link: 'https://yashgandhi.substack.com/p/the-mental-trap-14-the-illusion-of',
-      tags: ['Psychology', 'Decision Making', 'Personal Growth'],
+      title: 'the straw man fallacy',
+      excerpt: 'the addiction to easy arguments',
+      date: 'Sep 09, 2025',
+      readTime: '7 min read',
+      link: 'https://open.substack.com/pub/yashgandhi/p/the-straw-man-fallacy?r=3cbkg2&utm_campaign=post&utm_medium=web&showWelcomeOnShare=false',
+      tags: ['Philosophy', 'Decision Making', 'Personal Growth'],
     },
     {
-      title: 'Why Successful People Love To Gamble',
-      excerpt: 'The Hidden Addiction of High Achievers',
-      date: 'Mar 17, 2025',
-      readTime: '7 min read',
-      link: 'https://yashgandhi.substack.com/p/the-mental-trap-44-why-successful',
-      tags: ['Psychology', 'Success', 'Behavior'],
+      title: '7 Countries. 17 Cities. 10 Weeks. 0 Days Off.',
+      excerpt: 'How I Worked Full Time and Still Saw the World This Summer Without Taking a Single Day of PTO',
+      date: 'Jul 29, 2025',
+      readTime: '8 min read',
+      link: 'https://open.substack.com/pub/yashgandhi/p/7-countries-17-cities-10-weeks-0?r=3cbkg2&utm_campaign=post&utm_medium=web&showWelcomeOnShare=false',
+      tags: ['Psychology', 'Lifestyle', 'Behavior'],
     },
     {
       title: 'the versions of me you\'ll never meet',
@@ -44,27 +60,15 @@ const Blog = () => {
         <p className="text-gray-300 text-lg mb-8">
           I write about technology, psychology, and life on my Substack.
         </p>
-        <a
-          href="https://yashgandhi.substack.com/"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex items-center px-6 py-3 bg-secondary/10 hover:bg-secondary/20 text-secondary rounded-lg transition-colors duration-300"
-        >
-          <span className="mr-2">Subscribe to my newsletter</span>
-          <svg
-            className="w-5 h-5"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M14 5l7 7m0 0l-7 7m7-7H3"
-            />
-          </svg>
-        </a>
+        
+        {/* Embedded Subscribe Form */}
+        <div className="mb-8">
+          <div 
+            data-supascribe-embed-id="135402336170" 
+            data-supascribe-subscribe
+            className="max-w-md"
+          ></div>
+        </div>
       </motion.div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">

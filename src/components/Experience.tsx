@@ -8,16 +8,16 @@ const Experience = () => {
     {
       title: 'Vertical Operations Intern',
       company: 'Super.com',
-      period: '(Incoming) Summer 2025',
+      period: 'Summer 2025',
       description: 'Series C startup serving as a saving app that empowers users to spend less, save more, and build credit.',
-      technologies: ['Operations', 'Analytics', 'Strategy'],
+      technologies: ['Confluence', 'Smartsheet', 'Snowflake', 'SQL', 'Python'],
       logo: '/images/super-logo.png',
       website: 'https://super.com'
     },
     {
       title: 'Senior Product & Operations',
       company: 'HotTakes',
-      period: '2023 - Present',
+      period: '2023 - 2025',
       description: 'Seed-stage startup focused on creating a free-to-play sports betting platform for users to win cash prizes without any risk.',
       technologies: ['React', 'TypeScript', 'Node.js', 'Airtable'],
       logo: '/images/hottakes-logo.jpeg',

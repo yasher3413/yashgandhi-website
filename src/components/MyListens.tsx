@@ -43,11 +43,11 @@ const MyListens = () => {
           <Card className="h-full flex flex-col">
             <div className="space-y-4 flex flex-col flex-1">
               <h3 className="text-2xl font-bold text-secondary">Current Playlist</h3>
-              <p className="text-gray-400">My favorite country tracks</p>
+              <p className="text-gray-400">My favorite EDM tracks</p>
               <div className="flex-1 flex items-center justify-center">
                 <div className="w-[400px] h-[400px] relative">
                   <iframe
-                    src="https://open.spotify.com/embed/playlist/2wXpQnxQ728idZVsXN24AI?theme=0&compact=1"
+                    src="https://open.spotify.com/embed/playlist/77rK2UD8whsNGCJIWgZdyy?si=L8JUPaUyRjuHEnQInTpMnw&pi=hNgjYevpSCqKy?theme=0&compact=1"
                     width="100%"
                     height="100%"
                     frameBorder="0"
