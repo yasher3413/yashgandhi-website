@@ -21,12 +21,20 @@ const Blog = () => {
 
   const blogPosts = [
     {
-      title: 'the straw man fallacy',
-      excerpt: 'the addiction to easy arguments',
-      date: 'Sep 09, 2025',
+      title: '42.2 km to almost finding myself',
+      excerpt: 'something that changed me more than the finish line ever did',
+      date: 'Nov 19, 2025',
       readTime: '7 min read',
-      link: 'https://open.substack.com/pub/yashgandhi/p/the-straw-man-fallacy?r=3cbkg2&utm_campaign=post&utm_medium=web&showWelcomeOnShare=false',
-      tags: ['Philosophy', 'Decision Making', 'Personal Growth'],
+      link: 'https://open.substack.com/pub/yashgandhi/p/422-km-to-almost-finding-myself?utm_campaign=post-expanded-share&utm_medium=web',
+      tags: ['Achievement', 'Decision Making', 'Personal Growth'],
+    },
+    {
+      title: 'independence vs isolation',
+      excerpt: 'a thin line between standing strong and standing alone',
+      date: 'Sep 16, 2025',
+      readTime: '5 min read',
+      link: 'https://open.substack.com/pub/yashgandhi/p/independence-vs-isolation?utm_campaign=post-expanded-share&utm_medium=web',
+      tags: ['Psychology', 'Lifestyle', 'Behavior'],
     },
     {
       title: '7 Countries. 17 Cities. 10 Weeks. 0 Days Off.',
@@ -34,14 +42,6 @@ const Blog = () => {
       date: 'Jul 29, 2025',
       readTime: '8 min read',
       link: 'https://open.substack.com/pub/yashgandhi/p/7-countries-17-cities-10-weeks-0?r=3cbkg2&utm_campaign=post&utm_medium=web&showWelcomeOnShare=false',
-      tags: ['Psychology', 'Lifestyle', 'Behavior'],
-    },
-    {
-      title: 'the versions of me you\'ll never meet',
-      excerpt: 'because not every version survives the becoming',
-      date: 'Mar 25, 2025',
-      readTime: '5 min read',
-      link: 'https://yashgandhi.substack.com/p/the-versions-of-me-youll-never-meet',
       tags: ['Personal', 'Growth', 'Reflection'],
     },
   ];
@@ -58,7 +58,7 @@ const Blog = () => {
           Blog
         </h2>
         <p className="text-gray-300 text-lg mb-8">
-          I write about technology, psychology, and life on my Substack.
+          I write about technology, psychology, and life on my Substack. Here are some of my most popular blog posts!
         </p>
         
         {/* Embedded Subscribe Form */}

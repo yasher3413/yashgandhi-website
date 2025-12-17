@@ -32,7 +32,7 @@ const About = () => {
               <ul className="space-y-1 text-gray-400">
                 <li>Hockey</li>
                 <li>Travelling</li>
-                <li>Music</li>
+                <li>Writing</li>
                 <li>Weightlifting</li>
                 <li>Golf</li>
               </ul>

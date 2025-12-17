@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 const Terminal = () => {
   const [text, setText] = useState('');
   const fullText = `visitor@yashgandhi:~$ whoami
-> Student | Writer | Designer | Developer
+> Student | Author | Designer | Developer
 
 visitor@yashgandhi:~$ location
 > Toronto, Canada

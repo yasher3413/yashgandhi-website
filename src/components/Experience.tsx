@@ -10,7 +10,7 @@ const Experience = () => {
       company: 'Super.com',
       period: 'Summer 2025',
       description: 'Series C startup serving as a saving app that empowers users to spend less, save more, and build credit.',
-      technologies: ['Confluence', 'Smartsheet', 'Snowflake', 'SQL', 'Python'],
+      technologies: ['Jira', 'Smartsheet', 'Snowflake', 'SQL', 'Python'],
       logo: '/images/super-logo.png',
       website: 'https://super.com'
     },
