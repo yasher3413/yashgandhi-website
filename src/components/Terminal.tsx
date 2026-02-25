@@ -9,7 +9,7 @@ visitor@yashgandhi:~$ location
 > Toronto, Canada
 
 visitor@yashgandhi:~$ skills
-> JavaScript, Python, React, Node.js, AWS, and more...
+> JavaScript, Python, React, Node.js, AWS, SQL, and more...
 
 visitor@yashgandhi:~$ hobbies
 > 🏒 Hockey | ⛳ Golf | 🏎️ F1 | ✈️ Travelling

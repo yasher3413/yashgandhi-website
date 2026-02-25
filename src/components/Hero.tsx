@@ -34,7 +34,7 @@ const Hero = () => {
           transition={{ delay: 0.4 }}
           className="mt-4 text-lg md:text-xl text-gray-400 font-mono px-4"
         >
-          Product & Operations Analyst Based in Toronto
+          Data & Operations Analyst Based in Toronto
         </motion.p>
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
