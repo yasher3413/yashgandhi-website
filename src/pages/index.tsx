@@ -98,11 +98,11 @@ export default function Home() {
           <section id="projects">
             <Projects />
           </section>
-          <section id="blog">
-            <Blog />
-          </section>
           <section id="book">
             <Book />
+          </section>
+          <section id="blog">
+            <Blog />
           </section>
           <section id="listens">
             <MyListens />
