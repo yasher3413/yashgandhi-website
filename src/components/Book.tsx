@@ -48,7 +48,7 @@ const Book = () => {
                   To Have It Figured Out
                 </h3>
                 <p className="text-gray-400 text-sm mb-4">
-                  180 pages · Paperback Edition · Published June 13, 2025
+                  186 pages · Kindle & Paperback Edition · Published June 12, 2025
                 </p>
                 <p className="text-gray-300 leading-relaxed mb-4">
                   A collection of reflections, questions, and small moments from someone still trying to make sense of it all. Through honest essays about uncertainty and everything in between, when you're no longer a kid, but not quite a &quot;figured-out&quot; adult either.
