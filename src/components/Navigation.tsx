@@ -13,7 +13,7 @@ const Navigation = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      const sections = ['home', 'about', 'experience', 'projects', 'blog', 'listens', 'contact'];
+      const sections = ['home', 'about', 'experience', 'projects', 'blog', 'book', 'listens', 'contact'];
       const scrollPosition = window.scrollY;
       const windowHeight = window.innerHeight;
       const documentHeight = document.documentElement.scrollHeight;
@@ -103,7 +103,7 @@ const Navigation = () => {
           } md:flex absolute md:relative right-0 top-14 md:top-0 bg-primary/95 md:bg-primary/80 backdrop-blur-sm rounded-2xl md:rounded-full p-4 md:p-2 border border-secondary/20 flex-col md:flex-row min-w-[160px] md:min-w-0 md:w-auto`}
         >
           <ul className="flex flex-col md:flex-row gap-2">
-            {['home', 'about', 'experience', 'projects', 'blog', 'listens', 'contact'].map((section) => (
+            {['home', 'about', 'experience', 'projects', 'blog', 'book', 'listens', 'contact'].map((section) => (
               <li key={section}>
                 <motion.button
                   whileHover={{ scale: 1.1 }}

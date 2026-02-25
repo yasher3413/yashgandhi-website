@@ -6,6 +6,7 @@ import Hero from '../components/Hero';
 import About from '../components/About';
 import Experience from '../components/Experience';
 import Blog from '../components/Blog';
+import Book from '../components/Book';
 import Contact from '../components/Contact';
 import Navigation from '../components/Navigation';
 import ParticleBackground from '../components/ParticleBackground';
@@ -99,6 +100,9 @@ export default function Home() {
           </section>
           <section id="blog">
             <Blog />
+          </section>
+          <section id="book">
+            <Book />
           </section>
           <section id="listens">
             <MyListens />
