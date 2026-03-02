@@ -12,6 +12,7 @@ import Navigation from '../components/Navigation';
 import ParticleBackground from '../components/ParticleBackground';
 import MyListens from '../components/MyListens';
 import Projects from '../components/Projects';
+import Wellness from '../components/Wellness';
 import BackToTop from '../components/BackToTop';
 
 export default function Home() {
@@ -100,6 +101,9 @@ export default function Home() {
           </section>
           <section id="projects">
             <Projects />
+          </section>
+          <section id="wellness">
+            <Wellness />
           </section>
           <section id="book">
             <Book />
