@@ -102,14 +102,14 @@ export default function Home() {
           <section id="projects">
             <Projects />
           </section>
-          <section id="wellness">
-            <Wellness />
-          </section>
           <section id="book">
             <Book />
           </section>
           <section id="blog">
             <Blog />
+          </section>
+          <section id="wellness">
+            <Wellness />
           </section>
           <section id="listens">
             <MyListens />
