@@ -6,7 +6,7 @@ import Image from 'next/image';
 const Experience = () => {
   const experiences = [
     {
-      title: 'Incoming AI Engineer Intern',
+      title: 'Incoming AI Engineering Intern',
       company: 'T-Mobile',
       period: 'Summer 2026',
       description: 'Building for the T-Life app, website, & customer support phone number.',
