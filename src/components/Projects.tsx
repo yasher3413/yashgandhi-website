@@ -18,10 +18,10 @@ const Projects = () => {
       tags: ["Python", "Flask", "OpenWeather API", "SQLite"],
     },
     {
-      title: "Norive Website",
-      description: "A modern, responsive website built with Next.js and Tailwind CSS. Features smooth animations and a clean, professional design.",
-      link: "https://github.com/yasher3413/norive-website",
-      tags: ["Next.js", "React", "Tailwind CSS", "TypeScript"],
+      title: "Personal Assistant",
+      description: "A personal assistant that can help you with your daily tasks, schedule events, search the web, and answer your questions.",
+      link: "https://github.com/yasher3413/personal-agent",
+      tags: ["TypeScript", "Next.js", "Anthropic Claude API", "Vercel"],
     },
   ];
 
