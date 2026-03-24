@@ -13,7 +13,7 @@ const About = () => {
         <h2 className="section-title">About Me</h2>
         <div className="bg-tertiary/50 p-8 rounded-lg backdrop-blur-sm border border-secondary/20">
           <p className="text-lg leading-relaxed">
-            I'm a Business & Computer Science student with expertise in data & operations.
+            I'm a Business & Computer Science student with expertise in AI/ML & operations.
             Currently @ Western University, I focus on developing innovative solutions that make a difference.
           </p>
           <div className="mt-6 grid grid-cols-2 gap-4">

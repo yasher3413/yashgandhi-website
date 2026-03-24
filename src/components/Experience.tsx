@@ -9,8 +9,8 @@ const Experience = () => {
       title: 'Incoming AI Engineering Intern',
       company: 'T-Mobile',
       period: 'Summer 2026',
-      description: 'Building for the T-Life app, website, & customer support phone number.',
-      technologies: ['Python', 'Machine Learning', 'AI'],
+      description: 'Building AI agents for the T-Life app, website, & customer support.',
+      technologies: ['Python', 'Machine Learning', 'AI', 'SDKs'],
       logo: '/images/TMobile-logo.png',
       website: 'https://www.t-mobile.com/'
     },
