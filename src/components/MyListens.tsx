@@ -45,15 +45,16 @@ const MyListens = () => {
               <h3 className="text-2xl font-bold text-secondary">Current Playlist</h3>
               <p className="text-gray-400">My favorite EDM tracks</p>
               <div className="flex-1 flex items-center justify-center">
-                <div className="w-[400px] h-[400px] relative">
+                <div className="w-full max-w-[352px] h-[352px] relative overflow-hidden rounded-xl">
                   <iframe
-                    src="https://open.spotify.com/embed/playlist/77rK2UD8whsNGCJIWgZdyy?si=L8JUPaUyRjuHEnQInTpMnw&pi=hNgjYevpSCqKy?theme=0&compact=1"
+                    src="https://open.spotify.com/embed/playlist/77rK2UD8whsNGCJIWgZdyy?si=L8JUPaUyRjuHEnQInTpMnw&pi=hNgjYevpSCqKy&theme=0&compact=1"
                     width="100%"
                     height="100%"
                     frameBorder="0"
                     allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
                     loading="lazy"
-                    className="rounded-xl absolute inset-0"
+                    className="absolute inset-0"
+                    title="Spotify playlist"
                   ></iframe>
                 </div>
               </div>
@@ -73,15 +74,16 @@ const MyListens = () => {
               <h3 className="text-2xl font-bold text-secondary">Favorite Podcast</h3>
               <p className="text-gray-400">Tools for everyday life</p>
               <div className="flex-1 flex items-center justify-center">
-                <div className="w-[400px] h-[400px] relative">
+                <div className="w-full max-w-[352px] h-[352px] relative overflow-hidden rounded-xl">
                   <iframe
-                    src="https://open.spotify.com/embed/show/79CkJF3UJTHFV8Dse3Oy0P?&compact=1"
+                    src="https://open.spotify.com/embed/show/79CkJF3UJTHFV8Dse3Oy0P?theme=1&compact=1"
                     width="100%"
                     height="100%"
                     frameBorder="0"
                     allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
                     loading="lazy"
-                    className="rounded-xl absolute inset-0"
+                    className="absolute inset-0"
+                    title="Spotify podcast"
                   ></iframe>
                 </div>
               </div>
