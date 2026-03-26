@@ -9,9 +9,6 @@ const Hero = () => {
       transition={{ duration: 0.8 }}
       className="h-[80vh] flex items-center justify-center relative overflow-hidden px-4"
     >
-      {/* Background gradient */}
-      <div className="absolute inset-0 bg-gradient-to-b from-primary via-tertiary to-primary opacity-50" />
-      
       {/* Animated background elements */}
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute -top-40 -left-40 w-80 h-80 bg-purple-500 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob" />

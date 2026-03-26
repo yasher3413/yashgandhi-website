@@ -2,10 +2,48 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  color-scheme: dark;
+  --color-primary: 10 25 47;
+  --color-secondary: 100 255 218;
+  --color-tertiary: 17 34 64;
+}
+
+.theme-light {
+  color-scheme: light;
+  --color-primary: 248 250 252;
+  --color-secondary: 15 118 110;
+  --color-tertiary: 226 232 240;
+}
+
 @layer base {
   body {
     @apply bg-primary text-gray-300;
   }
+}
+
+.theme-light body {
+  color: #0f172a;
+}
+
+.theme-light .text-gray-100 {
+  color: #0f172a;
+}
+
+.theme-light .text-gray-200 {
+  color: #1f2937;
+}
+
+.theme-light .text-gray-300 {
+  color: #334155;
+}
+
+.theme-light .text-gray-400 {
+  color: #475569;
+}
+
+.theme-light .text-gray-500 {
+  color: #64748b;
 }
 
 @layer components {

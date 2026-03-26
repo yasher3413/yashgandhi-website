@@ -94,7 +94,7 @@ const NowPlaying = () => {
             priority
           />
           <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 transition-opacity duration-300 rounded-xl" />
-          <span className="absolute top-2 left-2 px-2 py-0.5 rounded text-xs font-medium bg-black/60 text-gray-300">
+          <span className="absolute top-2 left-2 px-2 py-0.5 rounded text-xs font-medium bg-black/60 text-white">
             Last played
           </span>
         </a>
