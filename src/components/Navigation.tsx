@@ -5,6 +5,7 @@ const Navigation = () => {
   const [activeSection, setActiveSection] = useState('home');
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [theme, setTheme] = useState<'light' | 'dark'>('dark');
+  const [reduceMotion, setReduceMotion] = useState(false);
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, {
     stiffness: 100,
@@ -64,6 +65,22 @@ const Navigation = () => {
     window.localStorage.setItem('theme', theme);
   }, [theme]);
 
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const stored = window.localStorage.getItem('reduce-motion');
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const initialReduce =
+      stored === 'on' ? true : stored === 'off' ? false : prefersReduced;
+    setReduceMotion(initialReduce);
+  }, []);
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    document.documentElement.classList.toggle('reduce-motion', reduceMotion);
+    window.localStorage.setItem('reduce-motion', reduceMotion ? 'on' : 'off');
+    window.dispatchEvent(new Event('reduce-motion-change'));
+  }, [reduceMotion]);
+
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
     if (element) {
@@ -82,6 +99,10 @@ const Navigation = () => {
 
   const toggleTheme = () => {
     setTheme((prev) => (prev === 'light' ? 'dark' : 'light'));
+  };
+
+  const toggleReduceMotion = () => {
+    setReduceMotion((prev) => !prev);
   };
 
   return (
@@ -181,6 +202,20 @@ const Navigation = () => {
                     />
                   </svg>
                 )}
+              </motion.button>
+            </li>
+            <li className="flex justify-center">
+              <motion.button
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={toggleReduceMotion}
+                type="button"
+                aria-label={reduceMotion ? 'Disable reduced motion' : 'Enable reduced motion'}
+                className={`w-full md:w-auto px-4 py-2 md:py-1 rounded-full text-sm transition-colors border border-secondary/20 ${
+                  reduceMotion ? 'text-secondary' : 'text-gray-400 hover:text-secondary'
+                }`}
+              >
+                Motion
               </motion.button>
             </li>
           </ul>

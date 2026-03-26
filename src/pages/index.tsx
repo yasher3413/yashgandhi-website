@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { motion, useMotionValue, useSpring } from 'framer-motion';
+import { motion, useMotionValue, useSpring, useReducedMotion } from 'framer-motion';
 import Head from 'next/head';
 import Terminal from '../components/Terminal';
 import Hero from '../components/Hero';
@@ -17,6 +17,8 @@ import BackToTop from '../components/BackToTop';
 
 export default function Home() {
   const [mounted, setMounted] = useState(false);
+  const [reduceMotionOverride, setReduceMotionOverride] = useState<boolean | null>(null);
+  const prefersReducedMotion = useReducedMotion();
   const cursorX = useMotionValue(-100);
   const cursorY = useMotionValue(-100);
   const springConfig = { 
@@ -29,6 +31,31 @@ export default function Home() {
 
   useEffect(() => {
     setMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const readSetting = () => {
+      const stored = window.localStorage.getItem('reduce-motion');
+      if (stored === 'on') return true;
+      if (stored === 'off') return false;
+      return null;
+    };
+    setReduceMotionOverride(readSetting());
+    const handleStorage = (event: StorageEvent) => {
+      if (event.key === 'reduce-motion') {
+        setReduceMotionOverride(readSetting());
+      }
+    };
+    const handleMotionChange = () => {
+      setReduceMotionOverride(readSetting());
+    };
+    window.addEventListener('storage', handleStorage);
+    window.addEventListener('reduce-motion-change', handleMotionChange);
+    return () => {
+      window.removeEventListener('storage', handleStorage);
+      window.removeEventListener('reduce-motion-change', handleMotionChange);
+    };
   }, []);
 
   useEffect(() => {
@@ -45,6 +72,8 @@ export default function Home() {
 
   if (!mounted) return null;
 
+  const shouldReduceMotion = reduceMotionOverride ?? prefersReducedMotion;
+
   return (
     <>
       <Head>
@@ -58,13 +87,14 @@ export default function Home() {
       </Head>
 
       <style jsx global>{`
-        * {
+        html:not(.reduce-motion) * {
           cursor: none;
         }
-        body {
+        html:not(.reduce-motion) body {
           cursor: none;
         }
-        a, button {
+        html:not(.reduce-motion) a,
+        html:not(.reduce-motion) button {
           cursor: none;
         }
         :root {
@@ -75,18 +105,37 @@ export default function Home() {
             cursor: url("data:image/svg+xml,%3Csvg width='16' height='16' viewBox='0 0 16 16' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='8' cy='8' r='6' stroke='%232dd4bf' stroke-width='3'/%3E%3C/svg%3E") 8 8, auto;
           }
         }
+        @media (prefers-reduced-motion: reduce) {
+          html, body, * {
+            cursor: auto !important;
+          }
+          a, button {
+            cursor: pointer !important;
+          }
+        }
+        html.reduce-motion,
+        html.reduce-motion body,
+        html.reduce-motion * {
+          cursor: auto !important;
+        }
+        html.reduce-motion a,
+        html.reduce-motion button {
+          cursor: pointer !important;
+        }
       `}</style>
 
-      <ParticleBackground />
-      <motion.div
-        className="pointer-events-none fixed z-50 h-4 w-4 rounded-full border-[3px] border-secondary"
-        style={{
-          left: cursorXSpring,
-          top: cursorYSpring,
-          translateX: "-50%",
-          translateY: "-50%",
-        }}
-      />
+      {!shouldReduceMotion && <ParticleBackground />}
+      {!shouldReduceMotion && (
+        <motion.div
+          className="pointer-events-none fixed z-50 h-4 w-4 rounded-full border-[3px] border-secondary"
+          style={{
+            left: cursorXSpring,
+            top: cursorYSpring,
+            translateX: "-50%",
+            translateY: "-50%",
+          }}
+        />
+      )}
       <main className="min-h-screen">
         <section id="home">
           <Terminal />
