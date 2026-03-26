@@ -51,6 +51,16 @@ const Contact = () => {
               <span className="text-secondary">Email</span>
             </motion.a>
           </div>
+          <div className="mt-8 flex justify-center">
+            <a
+              href="https://cal.com/yashgandhi/20min"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-6 py-3 bg-secondary/10 border border-secondary rounded-full hover:bg-secondary/20 transition-all duration-300 text-secondary text-sm md:text-base"
+            >
+              Chat with me
+            </a>
+          </div>
         </div>
       </div>
     </motion.section>
