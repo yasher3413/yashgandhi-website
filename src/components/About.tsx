@@ -11,14 +11,14 @@ const About = () => {
     >
       <div className="max-w-4xl mx-auto">
         <h2 className="section-title">About Me</h2>
-        <div className="bg-tertiary/50 p-8 rounded-lg backdrop-blur-sm border border-secondary/20">
+        <div className="bg-tertiary p-8 rounded-lg border border-secondary/15">
           <p className="text-lg leading-relaxed">
             I'm a Business & Computer Science student with expertise in AI/ML & operations.
             Currently @ Western University, I focus on developing innovative solutions that make a difference.
           </p>
           <div className="mt-6 grid grid-cols-2 gap-4">
             <div className="space-y-2">
-              <h3 className="text-secondary font-semibold">Skills</h3>
+              <h3 className="text-gray-100 font-semibold">Skills</h3>
               <ul className="space-y-1 text-gray-400">
                 <li>JS/TypeScript</li>
                 <li>React/Next.js</li>
@@ -28,9 +28,11 @@ const About = () => {
               </ul>
             </div>
             <div className="space-y-2">
-              <h3 className="text-secondary font-semibold">Interests</h3>
+              <h3 className="text-gray-100 font-semibold">Interests</h3>
               <ul className="space-y-1 text-gray-400">
                 <li>Hockey</li>
+                <li>Golf</li>
+                <li>F1</li>
                 <li>Travelling</li>
                 <li>Writing</li>
                 <li>Weightlifting</li>

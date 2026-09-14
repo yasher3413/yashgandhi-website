@@ -144,8 +144,8 @@ const BookPage = () => {
             </motion.div>
 
             <div className="grid grid-cols-1 lg:grid-cols-[1.1fr_1fr] gap-8">
-              <div className="bg-tertiary/50 p-6 rounded-2xl border border-secondary/20">
-                <h2 className="text-2xl font-semibold text-secondary mb-4">Select a time</h2>
+              <div className="bg-tertiary p-6 rounded-lg border border-secondary/15">
+                <h2 className="text-2xl font-semibold text-gray-100 mb-4">Select a time</h2>
 
                 {isLoading ? (
                   <div className="flex items-center justify-center min-h-[240px]">
@@ -166,7 +166,7 @@ const BookPage = () => {
                             setSelectedDate(dateKey);
                             setSelectedSlot(slots[dateKey]?.[0] ?? null);
                           }}
-                          className={`px-3 py-2 rounded-full text-sm border transition-colors ${
+                          className={`px-3 py-2 rounded-lg text-sm border transition-colors ${
                             selectedDate === dateKey
                               ? 'bg-secondary text-primary border-secondary'
                               : 'border-secondary/30 text-gray-300 hover:border-secondary'
@@ -198,8 +198,8 @@ const BookPage = () => {
                 )}
               </div>
 
-              <div className="bg-tertiary/50 p-6 rounded-2xl border border-secondary/20">
-                <h2 className="text-2xl font-semibold text-secondary mb-4">Your details</h2>
+              <div className="bg-tertiary p-6 rounded-lg border border-secondary/15">
+                <h2 className="text-2xl font-semibold text-gray-100 mb-4">Your details</h2>
                 <form className="space-y-4" onSubmit={handleSubmit}>
                   <div>
                     <label className="block text-sm text-gray-400 mb-1">Name</label>
@@ -237,7 +237,7 @@ const BookPage = () => {
                     <button
                       type="submit"
                       disabled={!selectedSlot || isSubmitting}
-                      className="w-full px-6 py-3 bg-secondary/10 border border-secondary rounded-full hover:bg-secondary/20 transition-all duration-300 text-secondary text-sm md:text-base disabled:opacity-50 disabled:cursor-not-allowed"
+                      className="w-full px-6 py-3 bg-secondary text-primary rounded-lg font-medium hover:opacity-90 transition-opacity duration-200 text-sm md:text-base disabled:opacity-50 disabled:cursor-not-allowed"
                     >
                       {isSubmitting ? 'Booking…' : 'Book call'}
                     </button>

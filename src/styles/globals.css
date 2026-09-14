@@ -2,18 +2,20 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Dark (default): warm charcoal + burnt terracotta accent */
 :root {
   color-scheme: dark;
-  --color-primary: 10 25 47;
-  --color-secondary: 100 255 218;
-  --color-tertiary: 17 34 64;
+  --color-primary: 26 22 19;
+  --color-secondary: 224 130 92;
+  --color-tertiary: 38 32 28;
 }
 
+/* Light (default for new visitors): warm off-white + burnt terracotta accent */
 .theme-light {
   color-scheme: light;
-  --color-primary: 248 250 252;
-  --color-secondary: 15 118 110;
-  --color-tertiary: 226 232 240;
+  --color-primary: 250 248 244;
+  --color-secondary: 154 52 18;
+  --color-tertiary: 240 234 224;
 }
 
 @layer base {
@@ -22,41 +24,63 @@
   }
 }
 
+/* Warm-toned text scale, dark mode (default) */
+.text-gray-100 {
+  color: #f2ece4;
+}
+
+.text-gray-200 {
+  color: #e4dacd;
+}
+
+.text-gray-300 {
+  color: #c9bba9;
+}
+
+.text-gray-400 {
+  color: #a69684;
+}
+
+.text-gray-500 {
+  color: #8a7a6a;
+}
+
+/* Warm-toned text scale, light mode */
 .theme-light body {
-  color: #0f172a;
+  color: #211c17;
 }
 
 .theme-light .text-gray-100 {
-  color: #0f172a;
+  color: #1c1712;
 }
 
 .theme-light .text-gray-200 {
-  color: #1f2937;
+  color: #2e2620;
 }
 
 .theme-light .text-gray-300 {
-  color: #334155;
+  color: #4a3d33;
 }
 
 .theme-light .text-gray-400 {
-  color: #475569;
+  color: #6b5c4e;
 }
 
 .theme-light .text-gray-500 {
-  color: #64748b;
+  color: #8a7a6a;
 }
 
 @layer components {
   .nav-link {
     @apply text-gray-300 hover:text-secondary transition-colors;
   }
-  
+
   .section-title {
-    @apply text-4xl font-bold mb-8 text-secondary;
+    @apply text-4xl font-bold mb-8 text-gray-100;
   }
-  
+
   .gradient-text {
-    @apply bg-clip-text text-transparent bg-gradient-to-r from-secondary to-purple-500 animate-gradient;
+    @apply text-gray-100 font-bold;
   }
 }
 
@@ -71,49 +95,4 @@
 
 ::-webkit-scrollbar-thumb {
   @apply bg-secondary/20 rounded-full hover:bg-secondary/30 transition-colors;
-}
-
-/* Custom cursor */
-.cursor {
-  @apply fixed w-8 h-8 bg-secondary/20 rounded-full pointer-events-none z-50 mix-blend-difference;
-  transform: translate(-50%, -50%);
-}
-
-/* Animation delays */
-.animation-delay-2000 {
-  animation-delay: 2s;
-}
-
-.animation-delay-4000 {
-  animation-delay: 4s;
-}
-
-/* Blob animation */
-@keyframes blob {
-  0% {
-    transform: translate(0px, 0px) scale(1);
-  }
-  33% {
-    transform: translate(30px, -50px) scale(1.1);
-  }
-  66% {
-    transform: translate(-20px, 20px) scale(0.9);
-  }
-  100% {
-    transform: translate(0px, 0px) scale(1);
-  }
-}
-
-.animate-blob {
-  animation: blob 7s infinite;
-} 
-
-@media (prefers-reduced-motion: reduce) {
-  .animate-blob {
-    animation: none;
-  }
-}
-
-.reduce-motion .animate-blob {
-  animation: none;
 }

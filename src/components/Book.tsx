@@ -13,7 +13,7 @@ const Book = () => {
         viewport={{ once: true }}
         className="mb-16"
       >
-        <h2 className="text-4xl font-bold mb-6 text-left bg-gradient-to-r from-secondary to-primary bg-clip-text text-transparent">
+        <h2 className="text-4xl font-bold mb-6 text-gray-100">
           Book
         </h2>
         <p className="text-gray-300 text-lg mb-8">
@@ -32,7 +32,7 @@ const Book = () => {
           rel="noopener noreferrer"
           className="block group"
         >
-          <Card className="overflow-hidden hover:bg-secondary/5 transition-colors duration-300">
+          <Card className="overflow-hidden">
             <div className="flex flex-col md:flex-row gap-8 md:gap-10">
               {/* Book cover */}
               <div className="flex-shrink-0 w-full md:w-56 aspect-[2/3] rounded-lg overflow-hidden border border-secondary/20 bg-black">
@@ -44,7 +44,7 @@ const Book = () => {
               </div>
 
               <div className="flex-1 min-w-0">
-                <h3 className="text-2xl font-bold text-secondary group-hover:text-primary transition-colors mb-3">
+                <h3 className="text-2xl font-bold text-gray-100 group-hover:text-secondary transition-colors mb-3">
                   To Have It Figured Out
                 </h3>
                 <p className="text-gray-400 text-sm mb-4">

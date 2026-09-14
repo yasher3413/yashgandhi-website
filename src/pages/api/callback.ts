@@ -14,6 +14,8 @@ export default async function handler(
   }
 
   try {
+    const redirectUri = `http://127.0.0.1:${req.headers.host?.split(':')[1] ?? '3000'}/api/callback`;
+
     const response = await fetch('https://accounts.spotify.com/api/token', {
       method: 'POST',
       headers: {
@@ -25,7 +27,7 @@ export default async function handler(
       body: new URLSearchParams({
         grant_type: 'authorization_code',
         code: code as string,
-        redirect_uri: 'http://localhost:3000/api/callback',
+        redirect_uri: redirectUri,
       }),
     });
 

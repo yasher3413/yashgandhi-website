@@ -33,7 +33,7 @@ const Projects = () => {
         viewport={{ once: true }}
         className="mb-16"
       >
-        <h2 className="text-4xl font-bold mb-6 text-left bg-gradient-to-r from-secondary to-primary bg-clip-text text-transparent">
+        <h2 className="text-4xl font-bold mb-6 text-gray-100">
           Projects
         </h2>
         <p className="text-gray-300 text-lg mb-8">
@@ -57,14 +57,14 @@ const Projects = () => {
               rel="noopener noreferrer"
               className="block h-full"
             >
-              <Card className="h-full group hover:bg-secondary/5 transition-colors duration-300">
+              <Card className="h-full group">
                 <div className="flex flex-col h-full space-y-4">
                   <div className="flex justify-between items-start">
-                    <h3 className="text-2xl font-bold text-secondary group-hover:text-secondary/90 transition-colors">
+                    <h3 className="text-2xl font-bold text-gray-100 group-hover:text-secondary transition-colors">
                       {project.title}
                     </h3>
                     <svg
-                      className="w-6 h-6 text-secondary group-hover:text-secondary/90 transition-colors"
+                      className="w-6 h-6 text-gray-400 group-hover:text-secondary transition-colors"
                       fill="currentColor"
                       viewBox="0 0 24 24"
                       aria-hidden="true"

@@ -50,7 +50,7 @@ const Experience = () => {
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        className="text-4xl font-bold mb-12 text-left bg-gradient-to-r from-secondary to-primary bg-clip-text text-transparent"
+        className="text-4xl font-bold mb-12 text-gray-100"
       >
         Experience
       </motion.h2>
@@ -79,7 +79,7 @@ const Experience = () => {
                   </div>
                   <p className="text-sm text-secondary">{exp.period}</p>
                 </div>
-                <h3 className="text-2xl font-bold text-secondary">{exp.title}</h3>
+                <h3 className="text-2xl font-bold text-gray-100">{exp.title}</h3>
                 <p className="text-gray-400">{exp.company}</p>
                 <p className="text-gray-300">{exp.description}</p>
                 <div className="flex flex-wrap gap-2">
@@ -100,8 +100,8 @@ const Experience = () => {
                   transition={{ type: "spring", stiffness: 400, damping: 10 }}
                   href={exp.website}
                   target="_blank"
-                  rel="noopener noreferrer" 
-                  className="inline-block mt-4 px-4 py-2 bg-secondary/10 hover:bg-secondary/20 text-secondary rounded-lg transition-all duration-200 ease-in-out hover:shadow-lg relative z-10"
+                  rel="noopener noreferrer"
+                  className="inline-block mt-4 px-4 py-2 bg-secondary/10 hover:bg-secondary/20 text-secondary rounded-lg transition-all duration-200 ease-in-out relative z-10"
                 >
                   Visit Site →
                 </motion.a>

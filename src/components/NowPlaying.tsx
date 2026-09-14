@@ -99,7 +99,7 @@ const NowPlaying = () => {
           </span>
         </a>
         <div className="mt-4 space-y-1">
-          <h4 className="text-lg font-semibold text-secondary truncate">{data.title}</h4>
+          <h4 className="text-lg font-semibold text-gray-100 truncate">{data.title}</h4>
           <p className="text-sm text-gray-400 truncate">{data.artist}</p>
         </div>
       </div>

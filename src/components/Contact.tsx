@@ -12,7 +12,7 @@ const Contact = () => {
     >
       <div className="max-w-4xl mx-auto">
         <h2 className="section-title">Contact</h2>
-        <div className="bg-tertiary/50 p-8 rounded-lg backdrop-blur-sm border border-secondary/20">
+        <div className="bg-tertiary p-8 rounded-lg border border-secondary/15">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <motion.a 
               whileHover={{ scale: 1.05 }}
@@ -54,7 +54,7 @@ const Contact = () => {
           <div className="mt-8 flex justify-center">
             <a
               href="/book"
-              className="px-6 py-3 bg-secondary/10 border border-secondary rounded-full hover:bg-secondary/20 transition-all duration-300 text-secondary text-sm md:text-base"
+              className="px-6 py-3 bg-secondary text-primary rounded-lg font-medium hover:opacity-90 transition-opacity duration-200 text-sm md:text-base"
             >
               Chat with me
             </a>

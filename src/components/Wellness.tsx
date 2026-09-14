@@ -85,7 +85,7 @@ const Wellness = () => {
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        className="text-4xl font-bold mb-12 text-left bg-gradient-to-r from-secondary to-primary bg-clip-text text-transparent"
+        className="text-4xl font-bold mb-12 text-gray-100"
       >
         Wellness
       </motion.h2>
@@ -100,7 +100,7 @@ const Wellness = () => {
             <div className="space-y-4 flex flex-col flex-1">
               <div className="flex items-start justify-between">
                 <div>
-                <h3 className="text-2xl font-bold text-secondary">Latest Activity</h3>
+                <h3 className="text-2xl font-bold text-gray-100">Latest Activity</h3>
                 <p className="text-gray-400">Fresh from Strava</p>
                 </div>
                 <span className="text-xs uppercase tracking-widest text-secondary/80 bg-secondary/10 px-3 py-1 rounded-full">
@@ -166,7 +166,7 @@ const Wellness = () => {
             <div className="space-y-4 flex flex-col flex-1">
               <div className="flex items-start justify-between">
                 <div>
-                <h3 className="text-2xl font-bold text-secondary">Running Volume</h3>
+                <h3 className="text-2xl font-bold text-gray-100">Running Volume</h3>
                 <p className="text-gray-400">Last 4 weeks of training</p>
                 </div>
                 <span className="text-xs uppercase tracking-widest text-secondary/80 bg-secondary/10 px-3 py-1 rounded-full">

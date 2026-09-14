@@ -10,7 +10,7 @@ const MyListens = () => {
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        className="text-4xl font-bold mb-12 text-left bg-gradient-to-r from-secondary to-primary bg-clip-text text-transparent"
+        className="text-4xl font-bold mb-12 text-gray-100"
       >
         My Listens
       </motion.h2>
@@ -24,7 +24,7 @@ const MyListens = () => {
         >
           <Card className="h-full flex flex-col">
             <div className="space-y-4 flex flex-col flex-1">
-              <h3 className="text-2xl font-bold text-secondary">Now Playing</h3>
+              <h3 className="text-2xl font-bold text-gray-100">Now Playing</h3>
               <p className="text-gray-400">What I'm listening to right now</p>
               <div className="flex-1">
                 <NowPlaying />
@@ -42,7 +42,7 @@ const MyListens = () => {
         >
           <Card className="h-full flex flex-col">
             <div className="space-y-4 flex flex-col flex-1">
-              <h3 className="text-2xl font-bold text-secondary">Current Playlist</h3>
+              <h3 className="text-2xl font-bold text-gray-100">Current Playlist</h3>
               <p className="text-gray-400">My favorite EDM tracks</p>
               <div className="flex-1 flex items-center justify-center">
                 <div className="w-full max-w-[352px] h-[352px] relative overflow-hidden rounded-xl">
@@ -71,7 +71,7 @@ const MyListens = () => {
         >
           <Card className="h-full flex flex-col">
             <div className="space-y-4 flex flex-col flex-1">
-              <h3 className="text-2xl font-bold text-secondary">Favorite Podcast</h3>
+              <h3 className="text-2xl font-bold text-gray-100">Favorite Podcast</h3>
               <p className="text-gray-400">Tools for everyday life</p>
               <div className="flex-1 flex items-center justify-center">
                 <div className="w-full max-w-[352px] h-[352px] relative overflow-hidden rounded-xl">
