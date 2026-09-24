@@ -1,74 +1,51 @@
 import React from 'react';
-import { motion } from 'framer-motion';
-import Card from './Card';
+import Hole from './course/Hole';
+import { GOODREADS_URL, specs } from '@/content';
 
-const GOODREADS_URL = 'https://www.goodreads.com/book/show/236654175-to-have-it-figured-out';
+const Book = () => (
+  <Hole id="book" n={5} name="The Book" par={5} yards="186" note="186 pages" spec={specs.book} labels={['The book', 'The idea', 'Goodreads']} side="left">
+    <p className="text-lg text-mist max-w-[52ch]">
+      I wrote a book about the messiness of growing up, ambition, doubt, love, and the tension of becoming.
+    </p>
 
-const Book = () => {
-  return (
-    <section className="py-20">
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        className="mb-16"
-      >
-        <h2 className="text-4xl font-bold mb-6 text-gray-100">
-          Book
-        </h2>
-        <p className="text-gray-300 text-lg mb-8">
-          I wrote a book about the messiness of growing up, ambition, doubt, love, and the tension of becoming.
-        </p>
-      </motion.div>
+    <div data-shot className="mt-12 grid sm:grid-cols-[minmax(0,15rem)_1fr] gap-8 sm:gap-10 items-start">
+      <a href={GOODREADS_URL} target="_blank" rel="noopener noreferrer" className="group block w-44 sm:w-auto [perspective:1200px]">
+        <img
+          src="/Book%20Cover%20Frame%2023.png"
+          alt="To Have It Figured Out by Yash Gandhi"
+          width={470}
+          height={704}
+          className="w-full h-auto rounded-[2px] shadow-[0_24px_40px_-14px_rgba(0,0,0,0.75),0_4px_10px_-4px_rgba(0,0,0,0.5)] transition-transform duration-500 ease-out [transform-origin:left_center] group-hover:[transform:rotateY(-14deg)]"
+        />
+      </a>
+      <div>
+        <h3 className="font-display uppercase text-chalk text-5xl sm:text-6xl leading-[0.88]" style={{ fontWeight: 800 }}>
+          To Have It Figured Out
+        </h3>
+        <p className="mt-4 text-sm sm:text-base text-moss tabular">186 pages · Kindle &amp; Paperback Edition · Published June 12, 2025</p>
+      </div>
+    </div>
 
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-      >
-        <a
-          href={GOODREADS_URL}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="block group"
-        >
-          <Card className="overflow-hidden">
-            <div className="flex flex-col md:flex-row gap-8 md:gap-10">
-              {/* Book cover */}
-              <div className="flex-shrink-0 w-full md:w-56 aspect-[2/3] rounded-lg overflow-hidden border border-secondary/20 bg-black">
-                <img
-                  src="/Book%20Cover%20Frame%2023.png"
-                  alt="To Have It Figured Out by Yash Gandhi"
-                  className="w-full h-full object-cover"
-                />
-              </div>
+    <div data-shot className="mt-12 space-y-5 max-w-[62ch]">
+      <p className="text-xl leading-relaxed text-chalk">
+        A collection of reflections, questions, and small moments from someone still trying to make sense of it all. Through honest essays about
+        uncertainty and everything in between, when you&apos;re no longer a kid, but not quite a &quot;figured-out&quot; adult either.
+      </p>
+      <p className="text-lg leading-relaxed text-mist">
+        This is not a roadmap or a list of solutions. It&apos;s a conversation for anyone who has ever looked around and wondered if they were the
+        only one who still didn&apos;t have it all together. For anyone who&apos;s ever felt behind, overwhelmed, or quietly isolated.
+      </p>
+    </div>
 
-              <div className="flex-1 min-w-0">
-                <h3 className="text-2xl font-bold text-gray-100 group-hover:text-secondary transition-colors mb-3">
-                  To Have It Figured Out
-                </h3>
-                <p className="text-gray-400 text-sm mb-4">
-                  186 pages · Kindle & Paperback Edition · Published June 12, 2025
-                </p>
-                <p className="text-gray-300 leading-relaxed mb-4">
-                  A collection of reflections, questions, and small moments from someone still trying to make sense of it all. Through honest essays about uncertainty and everything in between, when you're no longer a kid, but not quite a &quot;figured-out&quot; adult either.
-                </p>
-                <p className="text-gray-400 leading-relaxed mb-6">
-                  This is not a roadmap or a list of solutions. It&apos;s a conversation for anyone who has ever looked around and wondered if they were the only one who still didn&apos;t have it all together. For anyone who&apos;s ever felt behind, overwhelmed, or quietly isolated.
-                </p>
-                <span className="inline-flex items-center gap-2 text-secondary font-medium group-hover:gap-3 transition-all">
-                  View on Goodreads
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                  </svg>
-                </span>
-              </div>
-            </div>
-          </Card>
-        </a>
-      </motion.div>
-    </section>
-  );
-};
+    <div data-shot className="mt-10">
+      <a href={GOODREADS_URL} target="_blank" rel="noopener noreferrer" className="btn-line">
+        View on Goodreads
+        <svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true">
+          <path d="M3 9L9 3M4 3h5v5" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+        </svg>
+      </a>
+    </div>
+  </Hole>
+);
 
 export default Book;

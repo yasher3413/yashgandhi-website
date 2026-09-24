@@ -1,117 +1,52 @@
 import React from 'react';
-import { motion } from 'framer-motion';
-import Card from './Card';
 import Image from 'next/image';
+import Hole from './course/Hole';
+import { experiences, specs } from '@/content';
 
-const Experience = () => {
-  const experiences = [
-    {
-      title: 'Incoming AI Engineering Intern',
-      company: 'T-Mobile',
-      period: 'Summer 2026',
-      description: 'Building AI agents for the T-Life app, website, & customer support.',
-      technologies: ['Python', 'Machine Learning', 'AI', 'SDKs'],
-      logo: '/images/TMobile-logo.png',
-      website: 'https://www.t-mobile.com/'
-    },
-    {
-      title: 'Vertical Operations Intern',
-      company: 'Super.com',
-      period: 'Summer 2025',
-      description: 'Series C startup serving as a saving app that empowers users to spend less, save more, and build credit.',
-      technologies: ['Jira', 'Smartsheet', 'Snowflake', 'SQL', 'Python'],
-      logo: '/images/super-logo.png',
-      website: 'https://super.com'
-    },
-    {
-      title: 'Senior Product & Operations',
-      company: 'HotTakes',
-      period: '2023 - 2025',
-      description: 'Seed-stage startup focused on creating a free-to-play sports betting platform for users to win cash prizes without any risk.',
-      technologies: ['React', 'TypeScript', 'Node.js', 'Airtable'],
-      logo: '/images/hottakes-logo.jpeg',
-      website: 'https://hottakes.com/'
-    },
-    {
-      title: 'Private Equity Analyst',
-      company: 'Lynwood Succession',
-      period: 'Summer 2024',
-      description: 'Contributed to due diligence reports for potential acquisitions, including financial modeling and market research.',
-      technologies: ['MS Excel', 'MS Word', 'MS PowerPoint'],
-      logo: '/images/lynwood-logo.png',
-      website: 'https://www.cbinsights.com/company/lynwood-succession'
-    },
-    // Add more experiences as needed
-  ];
+const Arrow = () => (
+  <svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true">
+    <path d="M3 9L9 3M4 3h5v5" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+  </svg>
+);
 
-  return (
-    <section className="py-20">
-      <motion.h2
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        className="text-4xl font-bold mb-12 text-gray-100"
-      >
-        Experience
-      </motion.h2>
-      <div className="grid grid-cols-1 gap-8">
-        {experiences.map((exp, index) => (
-          <motion.div
-            key={index}
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: index * 0.2 }}
-            className="relative"
-          >
-            <Card>
-              <div className="space-y-4">
-                <div className="flex items-center justify-between">
-                  <div className="relative w-24 h-12 flex items-center">
-                    <Image
-                      src={exp.logo}
-                      alt={`${exp.company} logo`}
-                      fill
-                      className="object-contain object-left"
-                      priority={index < 2}
-                      sizes="96px"
-                    />
-                  </div>
-                  <p className="text-sm text-secondary">{exp.period}</p>
-                </div>
-                <h3 className="text-2xl font-bold text-gray-100">{exp.title}</h3>
-                <p className="text-gray-400">{exp.company}</p>
-                <p className="text-gray-300">{exp.description}</p>
-                <div className="flex flex-wrap gap-2">
-                  {exp.technologies.map((tech, techIndex) => (
-                    <span
-                      key={techIndex}
-                      className="px-3 py-1 bg-secondary/10 text-secondary rounded-full text-sm"
-                    >
-                      {tech}
-                    </span>
-                  ))}
-                </div>
-                <motion.a 
-                  whileHover={{ 
-                    scale: 1.05,
-                    x: 5
-                  }}
-                  transition={{ type: "spring", stiffness: 400, damping: 10 }}
-                  href={exp.website}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-block mt-4 px-4 py-2 bg-secondary/10 hover:bg-secondary/20 text-secondary rounded-lg transition-all duration-200 ease-in-out relative z-10"
-                >
-                  Visit Site →
-                </motion.a>
-              </div>
-            </Card>
-          </motion.div>
-        ))}
-      </div>
-    </section>
-  );
-};
+const Experience = () => (
+  <Hole
+    id="experience"
+    n={3}
+    name="Experience"
+    par={4}
+    yards="436"
+    spec={specs.experience}
+    labels={experiences.map((e) => e.company.split(' ')[0])}
+    side="left"
+  >
+    <ol>
+      {experiences.map((exp, i) => (
+        <li key={exp.company} data-shot className={`grid grid-cols-[3.25rem_1fr] sm:grid-cols-[4.5rem_1fr] gap-x-5 sm:gap-x-7 py-10 ${i ? 'border-t border-chalk/15' : 'pt-0'}`}>
+          <div className="relative w-[3.25rem] h-[3.25rem] sm:w-[4.5rem] sm:h-[4.5rem] rounded-[4px] bg-card overflow-hidden">
+            <Image src={exp.logo} alt={`${exp.company} logo`} fill sizes="72px" className="object-contain p-2" />
+          </div>
+          <div className="min-w-0">
+            <h3 className="font-display uppercase text-chalk text-[2rem] sm:text-5xl leading-[0.92]" style={{ fontWeight: 800 }}>
+              {exp.title}
+            </h3>
+            <p className="mt-2 text-base text-chalk flex flex-wrap items-baseline gap-x-3">
+              <span className="font-medium">{exp.company}</span>
+              <span className="text-chalk/30">/</span>
+              <span className={`font-mono text-sm tabular ${i === 0 ? 'text-flag' : 'text-moss'}`}>{exp.period}</span>
+            </p>
+            <p className="mt-4 text-lg leading-relaxed text-mist max-w-[60ch]">{exp.description}</p>
+            <div className="mt-5 flex flex-wrap items-baseline justify-between gap-x-6 gap-y-3">
+              <p className="text-sm text-moss">{exp.technologies.join('  ·  ')}</p>
+              <a href={exp.website} target="_blank" rel="noopener noreferrer" className="link-chalk text-sm font-medium">
+                Visit site <Arrow />
+              </a>
+            </div>
+          </div>
+        </li>
+      ))}
+    </ol>
+  </Hole>
+);
 
-export default Experience; 
+export default Experience;

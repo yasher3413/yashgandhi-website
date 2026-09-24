@@ -29,35 +29,40 @@ const setStoredTrack = (track: SpotifyData) => {
   }
 };
 
+const Bars = () => (
+  <span className="inline-flex items-end gap-[2px] h-3" aria-hidden="true">
+    {[0, 1, 2].map((i) => (
+      <span key={i} className="w-[3px] bg-flag rounded-[1px] motion-safe:animate-[eq_0.9s_ease-in-out_infinite]" style={{ height: '100%', animationDelay: `${i * 0.18}s`, transformOrigin: 'bottom' }} />
+    ))}
+  </span>
+);
+
 const NowPlaying = () => {
-  const [data, setData] = useState<SpotifyData | null>(() => {
-    const stored = typeof window !== 'undefined' ? getStoredTrack() : null;
-    return stored?.title ? { ...stored, isPlaying: false } : null;
-  });
+  const [data, setData] = useState<SpotifyData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
+    const stored = getStoredTrack();
+    if (stored?.title) setData({ ...stored, isPlaying: false });
+
     const fetchData = async () => {
       try {
         const response = await fetch('/api/spotify');
-        const data = await response.json();
-        if (data.title) {
-          setStoredTrack({ ...data, isPlaying: data.isPlaying });
-          setData(data);
-        } else if (!data.isPlaying) {
-          const stored = getStoredTrack();
-          if (stored?.title) {
-            setData({ ...stored, isPlaying: false });
-          } else {
-            setData(prev => (prev?.title ? { ...prev, isPlaying: false } : data));
-          }
+        const next = await response.json();
+        if (next.title) {
+          setStoredTrack({ ...next, isPlaying: next.isPlaying });
+          setData(next);
+        } else if (!next.isPlaying) {
+          const last = getStoredTrack();
+          if (last?.title) setData({ ...last, isPlaying: false });
+          else setData((prev) => (prev?.title ? { ...prev, isPlaying: false } : next));
         } else {
-          setData(data);
+          setData(next);
         }
       } catch (error) {
         console.error('Error fetching Spotify data:', error);
-        const stored = getStoredTrack();
-        if (stored?.title) setData({ ...stored, isPlaying: false });
+        const last = getStoredTrack();
+        if (last?.title) setData({ ...last, isPlaying: false });
       } finally {
         setIsLoading(false);
       }
@@ -68,85 +73,56 @@ const NowPlaying = () => {
     return () => clearInterval(interval);
   }, []);
 
-  if (isLoading) {
-    return (
-      <div className="flex items-center justify-center flex-1 min-h-[360px]">
-        <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-secondary"></div>
-      </div>
-    );
-  }
-
-  // Not playing but we have last played track — show it
-  if (!data?.isPlaying && data?.title) {
-    return (
-      <div className="flex flex-col flex-1 min-h-[360px]">
-        <a
-          href={data.songUrl ?? '#'}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="group relative flex-1"
-        >
-          <Image
-            src={data.albumImageUrl ?? '/spotify-placeholder.png'}
-            alt={`${data.title} by ${data.artist}`}
-            fill
-            className="object-cover rounded-xl transition-transform duration-300 group-hover:scale-105 opacity-80"
-            priority
-          />
-          <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 transition-opacity duration-300 rounded-xl" />
-          <span className="absolute top-2 left-2 px-2 py-0.5 rounded text-xs font-medium bg-black/60 text-white">
-            Last played
-          </span>
-        </a>
-        <div className="mt-4 space-y-1">
-          <h4 className="text-lg font-semibold text-gray-100 truncate">{data.title}</h4>
-          <p className="text-sm text-gray-400 truncate">{data.artist}</p>
-        </div>
-      </div>
-    );
-  }
-
-  // No track data at all — show placeholder
-  if (!data?.isPlaying) {
-    return (
-      <div className="flex flex-col items-center justify-center flex-1 min-h-[360px]">
-        <div className="relative w-full h-full">
-          <Image
-            src="/spotify-placeholder.png"
-            alt="Not playing"
-            fill
-            className="object-cover rounded-xl opacity-50"
-            priority
-          />
-        </div>
-        <p className="text-gray-400 mt-4">Not playing anything right now, check back soon!</p>
-      </div>
-    );
-  }
+  const live = !!data?.isPlaying && !!data?.title;
+  const hasTrack = !!data?.title;
 
   return (
-    <div className="flex flex-col flex-1 min-h-[360px]">
+    <div>
+      <p className="text-sm text-moss flex items-center gap-2 h-5">
+        {isLoading && !hasTrack ? (
+          'Checking Spotify…'
+        ) : live ? (
+          <>
+            <Bars /> <span className="text-flag">Now playing</span>
+          </>
+        ) : hasTrack ? (
+          'Last played'
+        ) : (
+          'Not playing'
+        )}
+      </p>
+
       <a
-        href={data.songUrl}
+        href={hasTrack ? data!.songUrl : undefined}
         target="_blank"
         rel="noopener noreferrer"
-        className="group relative flex-1"
+        className={`group mt-4 block relative aspect-square w-full rounded-[3px] overflow-hidden bg-deep shadow-[0_24px_40px_-18px_rgba(0,0,0,0.7)] ${live ? 'ring-2 ring-flag ring-offset-4 ring-offset-rough' : ''}`}
       >
-        <Image
-          src={data.albumImageUrl}
-          alt={`${data.title} by ${data.artist}`}
-          fill
-          className="object-cover rounded-xl transition-transform duration-300 group-hover:scale-105"
-          priority
-        />
-        <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 transition-opacity duration-300 rounded-xl" />
+        {hasTrack ? (
+          <Image
+            src={data!.albumImageUrl ?? '/spotify-placeholder.png'}
+            alt={`${data!.title} by ${data!.artist}`}
+            fill
+            sizes="(min-width: 1024px) 360px, 90vw"
+            className={`object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03] ${live ? '' : 'saturate-[0.8]'}`}
+          />
+        ) : (
+          <div className="absolute inset-0 grid place-items-center">
+            <span className="font-pencil text-2xl text-sand px-6 text-center">
+              {isLoading ? 'warming up…' : 'Not playing anything right now, check back soon!'}
+            </span>
+          </div>
+        )}
       </a>
-      <div className="mt-4 space-y-1">
-        <h4 className="text-lg font-semibold text-secondary truncate">{data.title}</h4>
-        <p className="text-sm text-gray-400 truncate">{data.artist}</p>
-      </div>
+
+      {hasTrack && (
+        <div className="mt-4 min-w-0">
+          <p className={`text-xl font-semibold truncate ${live ? 'text-chalk' : 'text-chalk/90'}`}>{data!.title}</p>
+          <p className="text-mist truncate">{data!.artist}</p>
+        </div>
+      )}
     </div>
   );
 };
 
-export default NowPlaying; 
+export default NowPlaying;

@@ -83,6 +83,7 @@ export default async function handler(
             startDate: activity.start_date,
             kudos: activity.kudos_count,
             averageSpeed: activity.average_speed,
+            polyline: activity.map?.summary_polyline ?? null,
           }
         : null,
       stats: stats

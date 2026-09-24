@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react';
-import { motion } from 'framer-motion';
-import Card from './Card';
+import React, { useEffect, useMemo, useState } from 'react';
+import Hole from './course/Hole';
+import { specs } from '@/content';
+import { routeSpec } from '@/lib/route';
 
 interface StravaActivity {
   name: string;
@@ -10,6 +11,7 @@ interface StravaActivity {
   startDate: string;
   kudos: number;
   averageSpeed: number;
+  polyline?: string | null;
 }
 
 interface StravaStats {
@@ -29,10 +31,7 @@ interface StravaResponse {
   stats: StravaStats | null;
 }
 
-const formatDistance = (meters: number) => {
-  if (!meters) return '0.0 km';
-  return `${(meters / 1000).toFixed(1)} km`;
-};
+const km = (meters: number) => (meters ? (meters / 1000).toFixed(1) : '0.0');
 
 const formatDuration = (seconds: number) => {
   if (!seconds) return '0m';
@@ -47,17 +46,25 @@ const formatPace = (metersPerSecond: number) => {
   const secondsPerKm = 1000 / metersPerSecond;
   const minutes = Math.floor(secondsPerKm / 60);
   const seconds = Math.round(secondsPerKm % 60);
-  const paddedSeconds = seconds.toString().padStart(2, '0');
-  return `${minutes}:${paddedSeconds} /km`;
+  return `${minutes}:${seconds.toString().padStart(2, '0')}`;
 };
 
-const formatDate = (isoDate: string) => {
-  const date = new Date(isoDate);
-  return date.toLocaleDateString('en-US', {
-    month: 'short',
-    day: 'numeric',
-  });
-};
+const formatDate = (isoDate: string) =>
+  new Date(isoDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+
+const Figure = ({ value, unit, label }: { value: string; unit?: string; label: string }) => (
+  <div className="border-t border-chalk/15 pt-3">
+    <p className="text-sm text-moss">{label}</p>
+    <p className="mt-1 font-display text-chalk text-[2.1rem] sm:text-6xl leading-none tabular whitespace-nowrap" style={{ fontWeight: 800 }}>
+      {value}
+      {unit && <span className="font-mono text-sm text-moss ml-1.5 align-baseline" style={{ fontWeight: 400 }}>{unit}</span>}
+    </p>
+  </div>
+);
+
+const Waiting = ({ children }: { children: React.ReactNode }) => (
+  <p className="mt-6 font-pencil text-2xl text-sand min-h-[6rem]">{children}</p>
+);
 
 const Wellness = () => {
   const [data, setData] = useState<StravaResponse | null>(null);
@@ -67,150 +74,82 @@ const Wellness = () => {
     const fetchStrava = async () => {
       try {
         const response = await fetch('/api/strava');
-        const json = await response.json();
-        setData(json);
+        setData(await response.json());
       } catch (error) {
         console.error('Error fetching Strava data:', error);
       } finally {
         setIsLoading(false);
       }
     };
-
     fetchStrava();
   }, []);
 
-  return (
-    <section className="py-20">
-      <motion.h2
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        className="text-4xl font-bold mb-12 text-gray-100"
-      >
-        Wellness
-      </motion.h2>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        <motion.div
-          initial={{ opacity: 0, x: -20 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true }}
-          className="h-full"
-        >
-          <Card className="h-full flex flex-col">
-            <div className="space-y-4 flex flex-col flex-1">
-              <div className="flex items-start justify-between">
-                <div>
-                <h3 className="text-2xl font-bold text-gray-100">Latest Activity</h3>
-                <p className="text-gray-400">Fresh from Strava</p>
-                </div>
-                <span className="text-xs uppercase tracking-widest text-secondary/80 bg-secondary/10 px-3 py-1 rounded-full">
-                  Strava
-                </span>
-              </div>
-              {isLoading ? (
-                <div className="flex items-center justify-center flex-1 min-h-[220px]">
-                  <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-secondary"></div>
-                </div>
-              ) : data?.activity ? (
-                <div className="flex flex-col gap-4 flex-1">
-                  <div className="flex items-start justify-between">
-                    <div>
-                      <p className="text-lg font-semibold text-gray-100">{data.activity.name}</p>
-                      <p className="text-sm text-gray-400">
-                        {data.activity.type} · {formatDate(data.activity.startDate)}
-                      </p>
-                    </div>
-                    <span className="text-xs bg-secondary/10 text-secondary px-2 py-1 rounded-full">
-                      {data.activity.kudos} kudos
-                    </span>
-                  </div>
-                  <div className="mt-auto grid grid-cols-1 sm:grid-cols-3 gap-3 text-sm">
-                    <div className="rounded-lg border border-secondary/10 bg-primary/30 px-3 py-2">
-                      <p className="text-gray-400">Distance</p>
-                      <p className="text-gray-100 font-semibold">
-                        {formatDistance(data.activity.distance)}
-                      </p>
-                    </div>
-                    <div className="rounded-lg border border-secondary/10 bg-primary/30 px-3 py-2">
-                      <p className="text-gray-400">Time</p>
-                      <p className="text-gray-100 font-semibold">
-                        {formatDuration(data.activity.movingTime)}
-                      </p>
-                    </div>
-                    <div className="rounded-lg border border-secondary/10 bg-primary/30 px-3 py-2">
-                      <p className="text-gray-400">Avg pace</p>
-                      <p className="text-gray-100 font-semibold">
-                        {formatPace(data.activity.averageSpeed)}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              ) : (
-                <div className="flex flex-col items-center justify-center flex-1 min-h-[220px] text-center">
-                  <p className="text-gray-400">
-                    No activity data yet. Check back after the next workout.
-                  </p>
-                </div>
-              )}
-            </div>
-          </Card>
-        </motion.div>
+  // Once Strava answers, the hole is redrawn from the route of the latest run.
+  const route = useMemo(
+    () => (data?.activity?.polyline ? routeSpec(data.activity.polyline, data.activity.distance) : null),
+    [data]
+  );
 
-        <motion.div
-          initial={{ opacity: 0, x: 20 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true }}
-          className="h-full"
-        >
-          <Card className="h-full flex flex-col">
-            <div className="space-y-4 flex flex-col flex-1">
-              <div className="flex items-start justify-between">
-                <div>
-                <h3 className="text-2xl font-bold text-gray-100">Running Volume</h3>
-                <p className="text-gray-400">Last 4 weeks of training</p>
-                </div>
-                <span className="text-xs uppercase tracking-widest text-secondary/80 bg-secondary/10 px-3 py-1 rounded-full">
-                  Totals
-                </span>
-              </div>
-              {isLoading ? (
-                <div className="flex items-center justify-center flex-1 min-h-[220px]">
-                  <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-secondary"></div>
-                </div>
-              ) : data?.stats ? (
-                <div className="rounded-xl border border-secondary/10 bg-primary/30 px-4 py-4 flex flex-col flex-1">
-                  <p className="text-sm text-gray-400">Running</p>
-                  <div className="mt-auto grid grid-cols-1 sm:grid-cols-3 gap-4 text-sm pt-3">
-                    <div>
-                      <p className="text-gray-400">Distance</p>
-                      <p className="text-gray-100 font-semibold">
-                        {formatDistance(data.stats.recentRunDistance)}
-                      </p>
-                    </div>
-                    <div>
-                      <p className="text-gray-400">Runs</p>
-                      <p className="text-gray-100 font-semibold">
-                        {data.stats.recentRunCount}
-                      </p>
-                    </div>
-                    <div>
-                      <p className="text-gray-400">Time</p>
-                      <p className="text-gray-100 font-semibold">
-                        {formatDuration(data.stats.recentRunMovingTime)}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              ) : (
-                <div className="flex flex-col items-center justify-center flex-1 min-h-[220px] text-center">
-                  <p className="text-gray-400">Stats will appear once Strava connects.</p>
-                </div>
-              )}
+  return (
+    <Hole
+      id="wellness"
+      n={7}
+      name="Wellness"
+      par={5}
+      yards={route ? route.yards.toLocaleString('en-US') : '46,151'}
+      note={route ? 'this hole is my last run' : "that's 42.2 km"}
+      spec={route ?? specs.wellness} labels={['Latest', '4 weeks']} hideYards side="left">
+      <div data-shot>
+        <div className="flex items-center justify-between gap-4">
+          <h3 className="font-display uppercase text-chalk text-3xl sm:text-4xl" style={{ fontWeight: 800 }}>
+            Latest Activity
+          </h3>
+          <span className="inline-flex items-center gap-2 text-sm text-moss">
+            <span className="w-2 h-2 rounded-full bg-flag" aria-hidden="true" />
+            Fresh from Strava
+          </span>
+        </div>
+        {isLoading ? (
+          <Waiting>pulling the latest from Strava…</Waiting>
+        ) : data?.activity ? (
+          <>
+            <div className="mt-5 flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1">
+              <p className="text-2xl text-chalk font-medium">{data.activity.name}</p>
+              <p className="text-sm text-moss tabular">
+                {data.activity.type} · {formatDate(data.activity.startDate)} · {data.activity.kudos} kudos
+              </p>
             </div>
-          </Card>
-        </motion.div>
+            <div className="mt-8 grid grid-cols-3 gap-4 sm:gap-8">
+              <Figure label="Distance" value={km(data.activity.distance)} unit="km" />
+              <Figure label="Time" value={formatDuration(data.activity.movingTime)} />
+              <Figure label="Avg pace" value={formatPace(data.activity.averageSpeed)} unit="/km" />
+            </div>
+          </>
+        ) : (
+          <Waiting>No activity data yet. Check back after the next workout.</Waiting>
+        )}
       </div>
-    </section>
+
+      <div data-shot className="mt-20">
+        <div className="flex items-baseline justify-between gap-4">
+          <h3 className="font-display uppercase text-chalk text-3xl sm:text-4xl" style={{ fontWeight: 800 }}>
+            Running Volume
+          </h3>
+          <span className="text-sm text-moss">Last 4 weeks of training</span>
+        </div>
+        {isLoading ? (
+          <Waiting>adding up the kilometres…</Waiting>
+        ) : data?.stats ? (
+          <div className="mt-8 grid grid-cols-3 gap-4 sm:gap-8">
+            <Figure label="Distance" value={km(data.stats.recentRunDistance)} unit="km" />
+            <Figure label="Runs" value={String(data.stats.recentRunCount)} />
+            <Figure label="Time" value={formatDuration(data.stats.recentRunMovingTime)} />
+          </div>
+        ) : (
+          <Waiting>Stats will appear once Strava connects.</Waiting>
+        )}
+      </div>
+    </Hole>
   );
 };
 
