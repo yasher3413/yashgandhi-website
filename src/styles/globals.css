@@ -156,3 +156,22 @@
   from { opacity: 0; }
   to { opacity: 1; }
 }
+
+/* the resting ball breathes so first-timers find it */
+@keyframes ball-ping {
+  0% { transform: scale(0.55); opacity: 0.9; }
+  80%, 100% { transform: scale(1.5); opacity: 0; }
+}
+.ball-ping {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: ball-ping 1.8s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .ball-ping { animation: none; opacity: 0.6; }
+}
+
+@keyframes sheet {
+  from { transform: translateY(24px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}

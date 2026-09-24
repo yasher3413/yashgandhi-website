@@ -18,6 +18,10 @@ colors:
   stripe: "#2a7d53"
   putt: "#6cc15a"
   water: "#2f6fd6"
+  concrete: "#c9c4b2"
+  concrete-joint: "#a9a38f"
+  timber: "#8a6a44"
+  brick: "#7a3b2a"
 typography:
   display:
     fontFamily: "Big Shoulders Display, Arial Narrow, sans-serif"
@@ -157,6 +161,8 @@ A turf-and-card-stock palette: greens do the structural work, chalk white draws 
 - **Fairway** / **Mowing Stripe** (fairway, stripe): the two tones of the fairway stripes, set at 38°. The stripe tone is also the scrollbar thumb.
 - **Putting Green** (putt): the green, striped with a lighter tone at -30°.
 - **Water Hazard** (water): ponds, with a dashed inner ripple line.
+- **Cart Path Concrete** / **Expansion Joint** (concrete, concrete-joint): the 22px cart paths between holes, cut by a joint every 34px and edged with a 35% deep-rough shadow.
+- **Timber** / **Brick** (timber, brick): the plank bridge over the creek and the halfway house roof. They appear only in cart-path scenery.
 
 ### Neutral
 - **Rough** (rough): the page ground, the `theme-color`, and the backdrop behind the sticky mobile hole map.
@@ -251,10 +257,17 @@ There are no content cards. Content sits directly on the ground, separated by ha
 - **On card stock (subscribe):** a 48px card-coloured input with ink text beside a 48px flag-red submit button. Focus shows a 2px flag-red inset underline.
 
 ### Navigation
-- **Scorecard:** a real `<table>` fixed 12–16px above the bottom edge and centred. Rows: section names (10px, uppercase, 0.08em tracking, 600; shown from 768px up, red for the current hole), HOLE numbers in display 800 as buttons (30 / 40 / 62px wide), PAR in mono, and YOU in blue ballpoint pencil, slightly rotated, filled with a birdie for each hole visited. An OUT column totals the round. The current hole is circled by a red pencil ellipse that draws in over 0.6s. Hover and focus tint the cell with 5% ink.
+- **Scorecard:** a real `<table>` fixed 12–16px above the bottom edge and centred. Rows: section names (9px, uppercase, 0.06em tracking, 600; shown from 768px up, red for the current hole), HOLE numbers in display 800 as buttons (28 / 36 / 48px wide), PAR in 10px mono, and YOU in blue ballpoint pencil, slightly rotated. When scrolling, YOU fills with a birdie for each hole visited; when carting, it holds the real score, circled under par and boxed over par (double rings for two or more). An OUT column totals the round. The current hole is circled by a red pencil ellipse that draws in over 0.6s. Hover and focus tint the cell with 5% ink. In cart mode, holes not yet reached are disabled at 25% ink.
+- **Scorecard tabs:** card-stock tabs sit on top of the card. On the left, a Carting / Scrolling radio pair (the active tab is card stock with a 2px flag-red underline; the inactive one is a darker card grey). On the right, "Hide card". Collapsed, the card becomes a pill showing the circled current hole, its name, and the score to par. Phones start collapsed; the choice is remembered.
 
 ### Hole Diagram (signature)
-A generated SVG course: contour rings feathered to the edges, a two-tone striped fairway with a cut collar and a soft shadow, a blob-shaped green with a fringe, sand bunkers with a lip, ponds with a dashed ripple, clustered trees, a tee box with two markers, and a cup with a waving red flag (2.4s). Each shot is a 6-unit chalk ring (red when it is the current shot) with a mono leader label and a yardage line, stroked in deep rough so they stay readable. On the hero hole the visitor aims with a crosshair and a mono yardage readout, clicks to hit (the landing spot scatters more on longer shots), sees the ball arc with its shadow, and gets a pencil note describing where it landed. Flights last 450–1400ms, scaled by distance, and slow down as they land.
+A generated SVG course: contour rings feathered to the edges, a two-tone striped fairway with a cut collar and a soft shadow, a blob-shaped green with a fringe, sand bunkers with a lip, ponds with a dashed ripple, clustered trees, a tee box with two markers, and a cup with a waving red flag (2.4s). Each shot is a 6-unit chalk ring (red when it is the current shot) with a mono leader label and a yardage line, stroked in deep rough so they stay readable. Playable holes (the hero, and every hole in cart mode) are pull-back only. The visitor grabs the ball (which pulses with a chalk ring at rest), drags back, and a sand band runs to the finger while a chalk reticle with a mono readout (`YDS · %` on full shots, `FT` on putts) marks the target. Releasing hits. The flight follows the same gentle curve its dotted trail is drawn with, and the trail grows behind the ball rather than appearing ahead of it. A pencil note names the lie once the ball comes to rest. Marks are sized in screen pixels so they read the same on a phone. Arrow keys pull back and Enter hits. Flights last 450–1400ms, scaled by distance, and slow down as they land; putts roll without lift. In scroll mode the ball plays each marker in turn with a short pause at each, never skipping one.
+
+### Cart Path and Cart (cart mode)
+Between two holes, a concrete path in pixel coordinates (never stretched) runs from one hole's map column to the next. Each leg has its own route and scenery: pines, hill switchbacks over contour rings, a creek with a plank bridge, the halfway house, a pond, an avenue of trees, a bunker complex, and the practice green. Each gets one pencil note. The cart is a top-down card-stock body with a red and a green bag on the back. It drives the path with cubic ease-in-out over 3.4–5.2s, scaled by length, while the page follows it, then settles where the next hole's map pins. Ahead of the furthest hole the path is roped off: a parked cart, two chalk posts and a dashed red rope, with "Cart path closed" in display type. Once the hole is finished, the rope becomes a flag-red "Drive to hole N" button.
+
+### Mode Chooser (cart mode)
+A card-stock dialog over 75% deep rough, shown once per visit, titled "How are you getting around?". It offers two option cards (Carting, Scrolling), each with a line pictogram, a display name, one sentence, and a mono detail. On phones it is a bottom sheet. Escape chooses Scrolling.
 
 ### Caddie Note (signature)
 Nanum Pen Script in chalk, stroked in deep rough so it reads over turf, joined to a 2px dot on the drawing by a 1px chalk leader line at 55%. In running text it becomes a sand pencil aside.

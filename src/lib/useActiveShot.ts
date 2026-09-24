@@ -18,6 +18,10 @@ export const useActiveShot = (ref: RefObject<HTMLElement>) => {
       shots.forEach((s, i) => {
         if (s.getBoundingClientRect().top < line) next = i;
       });
+      // the last items of the page may never reach the reading line
+      const box = el.getBoundingClientRect();
+      const atBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 4;
+      if (box.bottom < line || (atBottom && box.top < window.innerHeight)) next = shots.length - 1;
       setActive(next);
     };
     const onScroll = () => {

@@ -11,7 +11,48 @@ import MyListens from '../components/MyListens';
 import Contact from '../components/Contact';
 import Scorecard from '../components/Scorecard';
 import TopoField from '../components/course/TopoField';
+import CartPath from '../components/course/CartPath';
+import CartGate from '../components/course/CartGate';
+import ModeChooser from '../components/ModeChooser';
+import Clubhouse from '../components/Clubhouse';
 import { SITE_URL } from '@/content';
+import { RoundProvider, useRound } from '@/lib/round';
+
+const SECTIONS = [About, Experience, Projects, Book, Blog, Wellness, MyListens, Contact];
+
+/**
+ * The nine holes in order. Scrolling shows them all; carting shows the holes
+ * reached so far, joined by cart paths, and ropes off the rest.
+ */
+const Course = () => {
+  const { mode, unlocked, scores } = useRound();
+  const cart = mode === 'cart';
+  const out: React.ReactNode[] = [<Hero key="h1" />];
+
+  for (let hole = 1; hole < 9; hole++) {
+    const Next = SECTIONS[hole - 1];
+    if (cart) {
+      if (unlocked <= hole) {
+        out.push(<CartGate key={`gate${hole}`} hole={hole} />);
+        break;
+      }
+      out.push(<CartPath key={`path${hole + 1}`} to={hole + 1} />);
+    }
+    out.push(<Next key={`h${hole + 1}`} />);
+  }
+
+  const finished = cart && scores.every((s) => s !== null);
+  if (finished) out.push(<Clubhouse key="clubhouse" />);
+  if (!cart || unlocked === 9) {
+    out.push(
+      <footer key="footer" className="mx-auto max-w-[1320px] px-4 sm:px-8 pt-10 pb-16 flex flex-wrap justify-between gap-4 text-sm text-moss">
+        <span>Yash Gandhi</span>
+        <span>Toronto, Canada</span>
+      </footer>
+    );
+  }
+  return <>{out}</>;
+};
 
 export default function Home() {
   return (
@@ -38,22 +79,13 @@ export default function Home() {
       </Head>
 
       <TopoField />
-      <main className="relative pb-28">
-        <Hero />
-        <About />
-        <Experience />
-        <Projects />
-        <Book />
-        <Blog />
-        <Wellness />
-        <MyListens />
-        <Contact />
-        <footer className="mx-auto max-w-[1320px] px-4 sm:px-8 pt-10 pb-16 flex flex-wrap justify-between gap-4 text-sm text-moss">
-          <span>Yash Gandhi</span>
-          <span>Toronto, Canada</span>
-        </footer>
-      </main>
-      <Scorecard />
+      <RoundProvider>
+        <main className="relative pb-28">
+          <Course />
+        </main>
+        <Scorecard />
+        <ModeChooser />
+      </RoundProvider>
     </>
   );
 }

@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { scoreName, withArticle, type BoardRow } from '@/lib/golf';
+import { COURSE_PAR, scoreName, toPar, withArticle, type BoardKind, type BoardRow } from '@/lib/golf';
 
-type Props = { strokes: number | null; onReset?: () => void };
+type Props = { kind: BoardKind; strokes: number | null; holes?: number[]; onReset?: () => void };
 
-/** The scorecard you sign after holing out, plus the Hole 1 leaderboard. */
-const HoleOut = ({ strokes, onReset }: Props) => {
+/** The card you sign after holing out (Hole 1, or the whole nine), plus its leaderboard. */
+const HoleOut = ({ kind, strokes, holes, onReset }: Props) => {
+  const round = kind === 'round';
   const [board, setBoard] = useState<BoardRow[] | null>(null);
   const [boardError, setBoardError] = useState(false);
   const [initials, setInitials] = useState('');
@@ -14,16 +15,22 @@ const HoleOut = ({ strokes, onReset }: Props) => {
   const [copied, setCopied] = useState(false);
 
   useEffect(() => {
-    fetch('/api/leaderboard')
+    fetch(`/api/leaderboard?board=${kind}`)
       .then((r) => (r.ok ? r.json() : Promise.reject()))
       .then((d) => setBoard(d.board))
       .catch(() => setBoardError(true));
-  }, []);
+  }, [kind]);
 
-  const shareUrl = strokes && typeof window !== 'undefined' ? `${window.location.origin}/s/${strokes}` : '';
-  const tweet = strokes
-    ? `https://twitter.com/intent/tweet?text=${encodeURIComponent(`Holed Hole 1 on Yash Gandhi's course in ${strokes}. That's ${withArticle(scoreName(strokes))} ⛳ Beat it:`)}&url=${encodeURIComponent(shareUrl)}`
-    : '';
+  const shareUrl =
+    strokes && typeof window !== 'undefined'
+      ? `${window.location.origin}/s/${strokes}${round && holes ? `?round=1&h=${holes.join('-')}` : ''}`
+      : '';
+  const brag = !strokes
+    ? ''
+    : round
+      ? `Shot ${strokes} (${toPar(strokes - COURSE_PAR)}) on Yash Gandhi's nine ⛳ Beat it:`
+      : `Holed Hole 1 on Yash Gandhi's course in ${strokes}. That's ${withArticle(scoreName(strokes))} ⛳ Beat it:`;
+  const tweet = strokes ? `https://twitter.com/intent/tweet?text=${encodeURIComponent(brag)}&url=${encodeURIComponent(shareUrl)}` : '';
 
   const sign = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -33,7 +40,7 @@ const HoleOut = ({ strokes, onReset }: Props) => {
       const r = await fetch('/api/leaderboard', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ initials, strokes }),
+        body: JSON.stringify({ initials, strokes, board: kind }),
       });
       const d = await r.json();
       if (!r.ok) throw new Error(d.error);
@@ -62,7 +69,7 @@ const HoleOut = ({ strokes, onReset }: Props) => {
         {strokes ? (
           <>
             <p className="font-pencil text-3xl leading-tight text-flag">
-              holed in {strokes}. that&apos;s {withArticle(scoreName(strokes))}.
+              {round ? `you shot ${strokes}. ${toPar(strokes - COURSE_PAR)} on the nine.` : `holed in ${strokes}. that's ${withArticle(scoreName(strokes))}.`}
             </p>
             <div className="mt-4 flex flex-wrap gap-2.5">
               <a href={tweet} target="_blank" rel="noopener noreferrer" className="btn-flag py-2.5 px-4 text-sm">
@@ -114,7 +121,7 @@ const HoleOut = ({ strokes, onReset }: Props) => {
 
       <div className="w-full sm:w-60 bg-card text-ink rounded-[4px] shadow-[0_18px_36px_-16px_rgba(0,0,0,0.65)] overflow-hidden">
         <p className="px-3 pt-2.5 pb-2 font-display uppercase text-lg leading-none" style={{ fontWeight: 800 }}>
-          Hole 1 leaderboard
+          {round ? 'The nine: leaderboard' : 'Hole 1 leaderboard'}
         </p>
         {boardError ? (
           <p className="px-3 pb-3 text-sm text-ink/75">The leaderboard is out on the course. Check back soon.</p>
@@ -136,7 +143,10 @@ const HoleOut = ({ strokes, onReset }: Props) => {
                 <tr key={i} className="border-t border-ink/15">
                   <td className="px-3 py-1 font-mono text-xs">{i + 1}</td>
                   <td className="px-3 py-0.5 border-l border-ink/15 font-pencil text-2xl leading-none text-[#2b2f8a]">{row.initials}</td>
-                  <td className="px-3 py-1 border-l border-ink/15 font-mono text-sm text-right">{row.strokes}</td>
+                  <td className="px-3 py-1 border-l border-ink/15 font-mono text-sm text-right">
+                    {row.strokes}
+                    {round && <span className="text-ink/60 ml-1.5">{toPar(row.strokes - COURSE_PAR)}</span>}
+                  </td>
                 </tr>
               ))}
             </tbody>

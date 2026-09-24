@@ -3,15 +3,15 @@ import type { HoleSpec } from '@/components/course/CourseArt';
 export const RESUME = '/Yash_Gandhi_Resume.pdf';
 
 export const HOLES = [
-  { n: 1, id: 'home', short: 'Tee', par: 4 },
-  { n: 2, id: 'about', short: 'About', par: 3 },
-  { n: 3, id: 'experience', short: 'Work', par: 4 },
-  { n: 4, id: 'projects', short: 'Projects', par: 3 },
-  { n: 5, id: 'book', short: 'Book', par: 5 },
-  { n: 6, id: 'blog', short: 'Blog', par: 3 },
-  { n: 7, id: 'wellness', short: 'Wellness', par: 5 },
-  { n: 8, id: 'listens', short: 'Listens', par: 4 },
-  { n: 9, id: 'contact', short: 'Contact', par: 4 },
+  { n: 1, id: 'home', short: 'Tee', par: 4, side: 'right' },
+  { n: 2, id: 'about', short: 'About', par: 3, side: 'right' },
+  { n: 3, id: 'experience', short: 'Work', par: 4, side: 'left' },
+  { n: 4, id: 'projects', short: 'Projects', par: 3, side: 'right' },
+  { n: 5, id: 'book', short: 'Book', par: 5, side: 'left' },
+  { n: 6, id: 'blog', short: 'Blog', par: 3, side: 'right' },
+  { n: 7, id: 'wellness', short: 'Wellness', par: 5, side: 'left' },
+  { n: 8, id: 'listens', short: 'Listens', par: 4, side: 'right' },
+  { n: 9, id: 'contact', short: 'Contact', par: 4, side: 'left' },
 ] as const;
 
 export const skills = ['JS/TypeScript', 'React/Next.js', 'Node.js', 'Python', 'SQL'];

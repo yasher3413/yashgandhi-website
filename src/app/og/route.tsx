@@ -1,7 +1,7 @@
 import { ImageResponse } from 'next/og';
 import { courseSvg } from '@/lib/courseSvg';
 import { heroSpec } from '@/content';
-import { scoreName, withArticle } from '@/lib/golf';
+import { COURSE_PAR, MAX_PER_HOLE, scoreName, toPar, withArticle } from '@/lib/golf';
 
 // Link-preview card: the first tee, or a shared score.
 
@@ -32,8 +32,14 @@ const C = { rough: '#14482f', deep: '#0c2e1e', chalk: '#f3f6ef', moss: '#9dbfa8'
 const PARS = [4, 3, 4, 3, 5, 3, 5, 4, 4];
 
 export async function GET(req: Request) {
-  const s = Number(new URL(req.url).searchParams.get('s'));
-  const strokes = Number.isInteger(s) && s >= 1 && s <= 20 ? s : null;
+  const params = new URL(req.url).searchParams;
+  const s = Number(params.get('s'));
+  const holesRaw = params.get('round') ? (params.get('h') ?? '').split('-').map(Number) : null;
+  const holes =
+    holesRaw && holesRaw.length === 9 && holesRaw.every((h) => Number.isInteger(h) && h >= 1 && h <= MAX_PER_HOLE) && holesRaw.reduce((a, b) => a + b, 0) === s
+      ? holesRaw
+      : null;
+  const strokes = holes ? s : Number.isInteger(s) && s >= 1 && s <= 20 ? s : null;
 
   const [display, sans, mono, pencil] = await Promise.all([
     googleFont('Big Shoulders Display', 900),
@@ -54,9 +60,11 @@ export async function GET(req: Request) {
           </div>
           {strokes ? (
             <div style={{ display: 'flex', flexDirection: 'column', marginTop: 34 }}>
-              <span style={{ fontFamily: 'Nanum Pen Script', fontSize: 58, color: C.flag, lineHeight: 1 }}>holed hole 1 in {strokes}.</span>
+              <span style={{ fontFamily: 'Nanum Pen Script', fontSize: 58, color: C.flag, lineHeight: 1 }}>
+                {holes ? `shot ${strokes} on the nine.` : `holed hole 1 in ${strokes}.`}
+              </span>
               <span style={{ fontFamily: 'Nanum Pen Script', fontSize: 44, color: C.sand, lineHeight: 1.1 }}>
-                that&apos;s {withArticle(scoreName(strokes))}. beat it?
+                {holes ? `${toPar(strokes - COURSE_PAR)} by cart. beat it?` : `that's ${withArticle(scoreName(strokes))}. beat it?`}
               </span>
             </div>
           ) : (
@@ -72,11 +80,11 @@ export async function GET(req: Request) {
             <span style={{ padding: '8px 12px', height: 40, display: 'flex', alignItems: 'center' }}>HOLE</span>
             <span style={{ padding: '0 12px', height: 30, display: 'flex', alignItems: 'center', borderTop: `1px solid rgba(18,64,42,0.18)` }}>YOU</span>
           </div>
-          {PARS.map((par, i) => (
+          {PARS.map((_, i) => (
             <div key={i} style={{ display: 'flex', flexDirection: 'column', width: 50, borderLeft: `1px solid rgba(18,64,42,0.18)` }}>
               <span style={{ height: 40, display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'Big Shoulders Display', fontSize: 28, color: C.ink }}>{i + 1}</span>
               <span style={{ height: 30, display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'Nanum Pen Script', fontSize: 28, color: C.pencil, borderTop: `1px solid rgba(18,64,42,0.18)` }}>
-                {i === 0 && strokes ? strokes : ''}
+                {holes ? holes[i] : i === 0 && strokes ? strokes : ''}
               </span>
             </div>
           ))}

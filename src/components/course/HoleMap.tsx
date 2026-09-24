@@ -1,7 +1,7 @@
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import CourseArt, { arcPath, HoleSpec, teeOf, yardScale } from './CourseArt';
 import { dist, Pt } from '@/lib/course';
-import { useFlight } from '@/lib/useFlight';
+import { partialFlight, useFlight } from '@/lib/useFlight';
 
 type Props = {
   spec: HoleSpec;
@@ -16,8 +16,28 @@ type Props = {
 const HoleMap = ({ spec, active, labels, className, compact = false, hideYards = false }: Props) => {
   const tee = teeOf(spec);
   const points = useMemo<Pt[]>(() => [tee, ...spec.shots], [tee, spec.shots]);
-  const target = points[Math.min(active + 1, points.length - 1)];
-  const { pos, lift } = useFlight(target);
+  // The ball plays shots one at a time, even when two items arrive together
+  // (side-by-side columns), so no marker is ever skipped.
+  const [shown, setShown] = useState(-1);
+  const goal = Math.min(active, spec.shots.length - 1);
+  const target = points[shown + 1];
+  const flight = useFlight(target, 900, false, 0.12);
+  const { pos, lift, flying } = flight;
+  const [forward, setForward] = useState(true);
+  useEffect(() => {
+    if (flying || shown === goal) return;
+    if (goal > shown) {
+      // settle on each marker for a beat before playing on
+      const t = setTimeout(() => {
+        setForward(true);
+        setShown(shown + 1);
+      }, shown < 0 ? 0 : 380);
+      return () => clearTimeout(t);
+    } else {
+      setForward(false);
+      setShown(goal);
+    }
+  }, [flying, shown, goal]);
   const scale = yardScale(spec);
   const k = spec.w / 400;
 
@@ -26,12 +46,13 @@ const HoleMap = ({ spec, active, labels, className, compact = false, hideYards =
       {() => (
         <g>
           {spec.shots.map((s, i) => {
-            const played = i <= active;
+            const live = flying && forward && i === shown;
+            const played = i < shown || (i === shown && !flying) || live;
             const a = points[i];
             return (
               <path
                 key={`trail${i}`}
-                d={arcPath(a, s)}
+                d={live ? partialFlight(flight) : arcPath(a, s)}
                 fill="none"
                 stroke="#f3f6ef"
                 strokeWidth={1.6 * k}
@@ -44,8 +65,8 @@ const HoleMap = ({ spec, active, labels, className, compact = false, hideYards =
           })}
 
           {spec.shots.map((s, i) => {
-            const played = i <= active;
-            const current = i === active;
+            const played = i < shown || (i === shown && !flying);
+            const current = i === shown && !flying;
             const last = i === spec.shots.length - 1;
             // put the label on whichever side is clear of bunkers
             const clear = (dir: number) =>
