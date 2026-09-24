@@ -250,4 +250,4 @@ export const specs: Record<string, HoleSpec> = {
   },
 };
 
-export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://yashgandhi.org';
+export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.yashgandhi.org';
