@@ -1,152 +1,116 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Hole from './course/Hole';
 import { specs } from '@/content';
-import { routeSpec } from '@/lib/route';
+import type { Wellness as Snapshot } from '@/pages/api/wellness';
 
-interface StravaActivity {
-  name: string;
-  type: string;
-  distance: number;
-  movingTime: number;
-  startDate: string;
-  kudos: number;
-  averageSpeed: number;
-  polyline?: string | null;
-}
+/** WHOOP's recovery zones, in course colours: green, sand, flag. */
+const zone = (score: number) =>
+  score >= 67
+    ? { color: '#6cc15a', note: 'green day. send it.' }
+    : score >= 34
+      ? { color: '#e7d39a', note: 'yellow. play it safe.' }
+      : { color: '#ef3b2c', note: 'red. rest day.' };
 
-interface StravaStats {
-  recentRunDistance: number;
-  recentRunCount: number;
-  recentRunMovingTime: number;
-  recentRideDistance: number;
-  recentRideCount: number;
-  recentRideMovingTime: number;
-  recentSwimDistance: number;
-  recentSwimCount: number;
-  recentSwimMovingTime: number;
-}
+const sportName = (s: string) => s.replace(/[-_]/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase());
 
-interface StravaResponse {
-  activity: StravaActivity | null;
-  stats: StravaStats | null;
-}
+const duration = (minutes: number) => (minutes < 60 ? `${minutes}m` : `${Math.floor(minutes / 60)}h ${minutes % 60}m`);
 
-const km = (meters: number) => (meters ? (meters / 1000).toFixed(1) : '0.0');
-
-const formatDuration = (seconds: number) => {
-  if (!seconds) return '0m';
-  const hours = Math.floor(seconds / 3600);
-  const minutes = Math.round((seconds % 3600) / 60);
-  if (hours === 0) return `${minutes}m`;
-  return `${hours}h ${minutes}m`;
+const ago = (iso: string) => {
+  const mins = Math.max(0, Math.round((Date.now() - new Date(iso).getTime()) / 60000));
+  if (mins < 60) return `${mins} min ago`;
+  const h = Math.round(mins / 60);
+  return h < 36 ? `${h}h ago` : new Date(iso).toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
 };
 
-const formatPace = (metersPerSecond: number) => {
-  if (!metersPerSecond) return '—';
-  const secondsPerKm = 1000 / metersPerSecond;
-  const minutes = Math.floor(secondsPerKm / 60);
-  const seconds = Math.round(secondsPerKm % 60);
-  return `${minutes}:${seconds.toString().padStart(2, '0')}`;
-};
-
-const formatDate = (isoDate: string) =>
-  new Date(isoDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
-
-const Figure = ({ value, unit, label }: { value: string; unit?: string; label: string }) => (
+const Figure = ({ value, unit, label, color }: { value: string; unit?: string; label: string; color?: string }) => (
   <div className="border-t border-chalk/15 pt-3">
     <p className="text-sm text-moss">{label}</p>
-    <p className="mt-1 font-display text-chalk text-[2.1rem] sm:text-6xl leading-none tabular whitespace-nowrap" style={{ fontWeight: 800 }}>
+    <p className="mt-1 font-display text-chalk text-[2.1rem] sm:text-6xl leading-none tabular whitespace-nowrap" style={{ fontWeight: 800, color }}>
       {value}
       {unit && <span className="font-mono text-sm text-moss ml-1.5 align-baseline" style={{ fontWeight: 400 }}>{unit}</span>}
     </p>
   </div>
 );
 
-const Waiting = ({ children }: { children: React.ReactNode }) => (
-  <p className="mt-6 font-pencil text-2xl text-sand min-h-[6rem]">{children}</p>
+const Waiting = ({ children }: { children: React.ReactNode }) => <p className="mt-6 font-pencil text-2xl text-sand min-h-[6rem]">{children}</p>;
+
+const Heading = ({ children, aside }: { children: React.ReactNode; aside?: React.ReactNode }) => (
+  <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
+    <h3 className="font-display uppercase text-chalk text-3xl sm:text-4xl" style={{ fontWeight: 800 }}>
+      {children}
+    </h3>
+    {aside}
+  </div>
 );
 
 const Wellness = () => {
-  const [data, setData] = useState<StravaResponse | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const [data, setData] = useState<Snapshot | null>(null);
+  const [state, setState] = useState<'loading' | 'ready' | 'down'>('loading');
 
   useEffect(() => {
-    const fetchStrava = async () => {
-      try {
-        const response = await fetch('/api/strava');
-        setData(await response.json());
-      } catch (error) {
-        console.error('Error fetching Strava data:', error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    fetchStrava();
+    fetch('/api/wellness')
+      .then((r) => (r.ok ? r.json() : Promise.reject(r.status)))
+      .then((d: Snapshot) => {
+        setData(d);
+        setState('ready');
+      })
+      .catch(() => setState('down'));
   }, []);
 
-  // Once Strava answers, the hole is redrawn from the route of the latest run.
-  const route = useMemo(
-    () => (data?.activity?.polyline ? routeSpec(data.activity.polyline, data.activity.distance) : null),
-    [data]
-  );
+  const rec = data?.recovery;
+  const z = rec ? zone(rec.score) : null;
+  const w = data?.workout;
+  const live = state === 'ready' && !data?.stale;
 
   return (
-    <Hole
-      id="wellness"
-      n={7}
-      name="Wellness"
-      par={5}
-      yards={route ? route.yards.toLocaleString('en-US') : '46,151'}
-      note={route ? 'this hole is my last run' : "that's 42.2 km"}
-      spec={route ?? specs.wellness} labels={['Latest', '4 weeks']} hideYards side="left">
+    <Hole id="wellness" n={7} name="Wellness" par={5} yards="46,151" note="that's 42.2 km" spec={specs.wellness} labels={['Recovery', 'Training']} hideYards side="left">
       <div data-shot>
-        <div className="flex items-center justify-between gap-4">
-          <h3 className="font-display uppercase text-chalk text-3xl sm:text-4xl" style={{ fontWeight: 800 }}>
-            Latest Activity
-          </h3>
-          <span className="inline-flex items-center gap-2 text-sm text-moss">
-            <span className="w-2 h-2 rounded-full bg-flag" aria-hidden="true" />
-            Fresh from Strava
-          </span>
-        </div>
-        {isLoading ? (
-          <Waiting>pulling the latest from Strava…</Waiting>
-        ) : data?.activity ? (
+        <Heading
+          aside={
+            <span className="inline-flex items-center gap-2 text-sm text-moss">
+              <span className={`w-2 h-2 rounded-full ${live ? 'bg-flag' : 'bg-moss'}`} aria-hidden="true" />
+              {state === 'ready' && data ? `Live from WHOOP · ${ago(data.updated)}` : 'Live from WHOOP'}
+            </span>
+          }
+        >
+          Today&apos;s recovery
+        </Heading>
+        {state === 'loading' ? (
+          <Waiting>reading the strap…</Waiting>
+        ) : state === 'down' || !data ? (
+          <Waiting>the strap is offline. check back soon.</Waiting>
+        ) : (
           <>
-            <div className="mt-5 flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1">
-              <p className="text-2xl text-chalk font-medium">{data.activity.name}</p>
-              <p className="text-sm text-moss tabular">
-                {data.activity.type} · {formatDate(data.activity.startDate)} · {data.activity.kudos} kudos
-              </p>
+            {z && <p className="mt-4 font-pencil text-2xl" style={{ color: z.color }}>{z.note}</p>}
+            <div className="mt-6 grid grid-cols-3 gap-4 sm:gap-8">
+              <Figure label="Recovery" value={rec ? `${rec.score}` : '—'} unit={rec ? '%' : undefined} color={z?.color} />
+              <Figure label="HRV" value={rec ? `${rec.hrv}` : '—'} unit={rec ? 'ms' : undefined} />
+              <Figure label="Resting HR" value={rec ? `${rec.rhr}` : '—'} unit={rec ? 'bpm' : undefined} />
             </div>
-            <div className="mt-8 grid grid-cols-3 gap-4 sm:gap-8">
-              <Figure label="Distance" value={km(data.activity.distance)} unit="km" />
-              <Figure label="Time" value={formatDuration(data.activity.movingTime)} />
-              <Figure label="Avg pace" value={formatPace(data.activity.averageSpeed)} unit="/km" />
+            <div className="mt-6 grid grid-cols-3 gap-4 sm:gap-8">
+              <Figure label="Sleep" value={data.sleep ? `${data.sleep.performance}` : '—'} unit={data.sleep ? '%' : undefined} />
+              <Figure label="Slept" value={data.sleep ? duration(Math.round(data.sleep.hours * 60)) : '—'} />
+              <Figure label="Day strain" value={data.strain ? data.strain.day.toFixed(1) : '—'} />
             </div>
           </>
-        ) : (
-          <Waiting>No activity data yet. Check back after the next workout.</Waiting>
         )}
       </div>
 
       <div data-shot className="mt-20">
-        <div className="flex items-baseline justify-between gap-4">
-          <h3 className="font-display uppercase text-chalk text-3xl sm:text-4xl" style={{ fontWeight: 800 }}>
-            Running Volume
-          </h3>
-          <span className="text-sm text-moss">Last 4 weeks of training</span>
-        </div>
-        {isLoading ? (
-          <Waiting>adding up the kilometres…</Waiting>
-        ) : data?.stats ? (
-          <div className="mt-8 grid grid-cols-3 gap-4 sm:gap-8">
-            <Figure label="Distance" value={km(data.stats.recentRunDistance)} unit="km" />
-            <Figure label="Runs" value={String(data.stats.recentRunCount)} />
-            <Figure label="Time" value={formatDuration(data.stats.recentRunMovingTime)} />
-          </div>
+        <Heading aside={w ? <span className="text-sm text-moss tabular">{ago(w.at)}</span> : undefined}>Latest workout</Heading>
+        {state === 'loading' ? (
+          <Waiting>checking the training log…</Waiting>
+        ) : !w ? (
+          <Waiting>no workouts logged lately. rest counts too.</Waiting>
         ) : (
-          <Waiting>Stats will appear once Strava connects.</Waiting>
+          <>
+            <p className="mt-5 text-2xl text-chalk font-medium">{sportName(w.sport)}</p>
+            <div className="mt-6 grid grid-cols-3 gap-4 sm:gap-8">
+              <Figure label="Strain" value={w.strain.toFixed(1)} />
+              <Figure label="Time" value={duration(w.minutes)} />
+              {w.meters ? <Figure label="Distance" value={(w.meters / 1000).toFixed(1)} unit="km" /> : <Figure label="Avg HR" value={`${w.avgHr}`} unit="bpm" />}
+            </div>
+          </>
         )}
       </div>
     </Hole>

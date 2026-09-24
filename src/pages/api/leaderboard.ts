@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { Redis } from '@upstash/redis';
+import { db } from '@/lib/redis';
 import { MAX_PER_HOLE, type BoardKind, type BoardRow } from '@/lib/golf';
 
 const BOARDS: Record<BoardKind, { key: string; min: number; max: number }> = {
@@ -8,17 +8,6 @@ const BOARDS: Record<BoardKind, { key: string; min: number; max: number }> = {
 };
 const which = (v: unknown): BoardKind => (v === 'round' ? 'round' : 'hole1');
 const EPOCH = 1_780_000_000; // seconds; keeps scores small and ties earliest-first
-
-let redis: Redis | null = null;
-const db = () => {
-  if (!redis) {
-    const url = process.env.KV_REST_API_URL;
-    const token = process.env.KV_REST_API_TOKEN;
-    if (!url || !token) throw new Error('Leaderboard store is not configured');
-    redis = new Redis({ url, token });
-  }
-  return redis;
-};
 
 const BLOCKED = new Set(['ASS', 'FUK', 'FUC', 'FCK', 'SEX', 'CUM', 'DIK', 'DIC', 'KKK', 'NIG', 'FAG', 'TIT', 'COK', 'KUM', 'JEW', 'NAZ', 'GAY', 'WTF', 'PIS', 'POO']);
 

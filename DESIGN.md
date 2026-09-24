@@ -151,7 +151,7 @@ Motion follows the ball: flights arc and slow down as they land, pencil strokes 
 A turf-and-card-stock palette: greens do the structural work, chalk white draws the lines, and red is the only loud colour.
 
 ### Primary
-- **Pin Flag Red** (flag): the flag on every green, the primary action button (Resume, Book call), the "Now playing" equaliser and label, the Strava live dot, the active scorecard column heading, the pencil circle around the current hole, text selection, and the text caret. Hover darkens it to **Flag Red, Pressed** (flag-deep) on the subscribe button.
+- **Pin Flag Red** (flag): the flag on every green, the primary action button (Resume, Book call), the "Now playing" equaliser and label, the WHOOP live dot, the active scorecard column heading, the pencil circle around the current hole, text selection, and the text caret. Hover darkens it to **Flag Red, Pressed** (flag-deep) on the subscribe button.
 
 ### Secondary
 - **Bunker Sand** (sand): bunkers in the diagrams, every handwritten caddie note in running text, text that turns sand on hover for display-type list items (projects, contact), and the 2px focus ring throughout the site.
@@ -194,7 +194,7 @@ A turf-and-card-stock palette: greens do the structural work, chalk white draws 
 - **Display** (900, clamp(6rem, 11vw, 11.5rem) on desktop and clamp(5.2rem, 17vw, 11.5rem) on mobile, line-height 0.8, uppercase): the owner's name in the hero. The /book page title uses the same voice at clamp(4rem, 12vw, 9rem).
 - **Headline** (800, 3rem / 4.5rem / 6rem across breakpoints, line-height 0.86, uppercase): hole names on tee signs. The plaque number beside it is set at 900, 3.75–6rem.
 - **Title** (800, 2rem–3.75rem, line-height 0.88–0.92, uppercase): role titles, project names, the book title, and contact labels (up to 4.5rem). Sub-block headings are 1.875–2.25rem.
-- **Figure** (800, 2.1rem up to 3.75rem, line-height 1, tabular): Strava figures. Units sit beside them in mono.
+- **Figure** (800, 2.1rem up to 3.75rem, line-height 1, tabular): WHOOP figures. The recovery number takes its zone colour: putt green from 67%, sand from 34%, flag red below. Units sit beside them in mono.
 - **Body** (400, 1.125rem, line-height 1.625, 52–62ch): descriptions, in mist. A lead paragraph can step up to 1.25rem in chalk.
 - **Label** (400–500, 0.875rem): tags joined with "·", captions and field labels, in moss.
 - **Yardage** (mono 400, 0.75–0.875rem, tabular, uppercase): "PAR 4 / 436 YDS", date and time readouts, the aim readout, and diagram leader labels (11 units, tracked 0.04em). A 30% chalk slash separates the parts.

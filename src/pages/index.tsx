@@ -47,7 +47,10 @@ const Course = () => {
     out.push(
       <footer key="footer" className="mx-auto max-w-[1320px] px-4 sm:px-8 pt-10 pb-16 flex flex-wrap justify-between gap-4 text-sm text-moss">
         <span>Yash Gandhi</span>
-        <span>Toronto, Canada</span>
+        <span className="flex gap-6">
+          <span>Toronto, Canada</span>
+          <a href="/privacy" className="hover:text-chalk underline decoration-chalk/30">Privacy</a>
+        </span>
       </footer>
     );
   }

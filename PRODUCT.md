@@ -8,7 +8,7 @@ web
 
 ## Stack
 
-Next.js 14 (pages router), React 18, Tailwind 3, framer-motion. Deployed on Vercel. API routes: `/api/spotify`, `/api/strava`, `/api/cal/slots`, `/api/cal/book`.
+Next.js 14 (pages router), React 18, Tailwind 3, framer-motion. Deployed on Vercel. API routes: `/api/spotify`, `/api/wellness` (WHOOP), `/api/whoop/connect`, `/api/whoop/callback`, `/api/leaderboard`, `/api/cal/slots`, `/api/cal/book`.
 
 ## Purpose
 
@@ -22,13 +22,13 @@ Two audiences equally:
 
 ## Positioning
 
-The whole person, not one lane. He's an engineer and operator, the author of a published book (*To Have It Figured Out*, June 2025), a Substack writer, and a marathoner who runs and lifts. Live Spotify and Strava data show what he's doing right now. The range is the point.
+The whole person, not one lane. He's an engineer and operator, the author of a published book (*To Have It Figured Out*, June 2025), a Substack writer, and a marathoner who runs and lifts. Live Spotify and WHOOP data show what he's doing right now. The range is the point.
 
 ## Must preserve
 
 - All content: about, skills, interests, experience (4 roles), projects (3), book, blog posts (3), wellness, listens, contact links.
 - Live Spotify now-playing (with last-played fallback via localStorage), Spotify playlist + podcast embeds.
-- Live Strava latest activity + 4-week running totals.
+- Live WHOOP data on Hole 7: today's recovery, HRV, resting HR, sleep, day strain, and the latest workout. (Strava was dropped in September 2026 when its API became subscriber-only.)
 - `/book` Cal.com booking page (slots + booking flow), restyled to match.
 - Supascribe Substack subscribe embed.
 - Resume at `/Yash_Gandhi_Resume.pdf`.
