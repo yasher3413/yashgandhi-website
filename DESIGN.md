@@ -165,7 +165,7 @@ A turf-and-card-stock palette: greens do the structural work, chalk white draws 
 - **Timber** / **Brick** (timber, brick): the plank bridge over the creek and the halfway house roof. They appear only in cart-path scenery.
 
 ### Neutral
-- **Rough** (rough): the page ground, the `theme-color`, and the backdrop behind the sticky mobile hole map.
+- **Rough** (rough): the page ground and the `theme-color`.
 - **Deep Rough** (deep): tee plaques, the booking details panel, the scrollbar track, the pin cup, and the dark stroke behind SVG text that keeps labels readable.
 - **Chalk** (chalk): headings, all diagram linework, leader lines, the ball's flight path, and the aim reticle. At 15% opacity it draws the rules between items; at 40% it draws the outline button's border.
 - **Mist** (mist): body text on the ground.
@@ -209,7 +209,7 @@ A turf-and-card-stock palette: greens do the structural work, chalk white draws 
 
 ## Layout
 
-The home page is a single scroll with a 1320px max width and 16px gutters (32px from 640px up). Each hole uses a 12-column grid from 1024px up: the hole diagram takes 5 columns and stays pinned (`top: 24px`, height `100vh − 10rem`), and the text takes 7. The diagram swaps sides from hole to hole, like the pages of a yardage book. Below 1024px the diagram turns into a compact sticky strip (22vh, at most 200px) on a rough backdrop with a hairline bottom rule, sitting under the tee sign.
+The home page is a single scroll with a 1320px max width and 16px gutters (32px from 640px up). Each hole uses a 12-column grid from 1024px up: the hole diagram takes 5 columns and stays pinned (`top: 24px`, height `100vh − 10rem`), and the text takes 7. The diagram swaps sides from hole to hole, like the pages of a yardage book. Below 1024px the diagram becomes a 220px-tall drawing under the tee sign that scrolls away with the page. It is never sticky on phones, because reading comes first.
 
 Holes have 96px of vertical padding (128px from 640px up). The body starts 48–64px below the tee sign. List items are separated by chalk hairlines with 36–40px of padding. The hero fills the viewport (`100svh`) and puts the name in the left 5 columns and Hole 1 in the right 7. The page has 112px of bottom padding so the fixed scorecard never covers content. The /book page narrows to 1180px and uses a 1.15fr : 1fr split between the tee sheet and the details panel.
 

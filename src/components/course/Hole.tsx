@@ -63,8 +63,9 @@ const Hole = ({ id, n, name, par, yards, spec, labels, side = 'left', note, hide
           </div>
           <div className={`lg:col-span-7 ${mapFirst ? 'lg:order-2' : 'lg:order-1'}`}>
             <TeeSign n={n} name={name} par={par} yards={yards} note={note} />
-            <div className={`${cart ? 'hidden' : ''} lg:hidden mt-6 sticky top-0 z-10 -mx-4 px-4 py-1 bg-rough border-b border-chalk/10 shadow-[0_12px_16px_-12px_rgba(0,0,0,0.5)]`}>
-              <HoleMap key={`m${spec.seed}`} spec={spec} active={active} labels={labels} compact className="mx-auto h-[22vh] max-h-[200px] w-auto" />
+            {/* phones: the hole sits under its tee sign and scrolls away, so the reading gets the whole screen */}
+            <div className={`${cart ? 'hidden' : ''} lg:hidden mt-8`}>
+              <HoleMap key={`m${spec.seed}`} spec={spec} active={active} labels={labels} compact className="mx-auto h-[220px] w-auto" />
             </div>
             <div ref={body} className="mt-12 sm:mt-16">
               {children}
