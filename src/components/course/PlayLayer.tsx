@@ -1,5 +1,5 @@
 import React from 'react';
-import { arcPath, type HoleSpec } from './CourseArt';
+import { type HoleSpec } from './CourseArt';
 import type { Golf } from '@/lib/useGolf';
 import { partialFlight } from '@/lib/useFlight';
 
@@ -26,7 +26,7 @@ const PlayLayer = ({ spec, g, children }: Props) => {
         return (
           <path
             key={i}
-            d={live ? partialFlight(g.flight) : arcPath(sg.from, sg.to, sg.bend)}
+            d={live ? partialFlight(g.flight) : `M${sg.from[0]},${sg.from[1]} Q${sg.via[0]},${sg.via[1]} ${sg.to[0]},${sg.to[1]}`}
             fill="none"
             stroke="#f3f6ef"
             strokeOpacity="0.75"

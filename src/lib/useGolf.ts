@@ -61,7 +61,7 @@ const lieAt = (spec: HoleSpec, p: Pt): Outcome => {
   return onFairway(spec, p) ? 'fairway' : 'rough';
 };
 
-type Seg = { from: Pt; to: Pt; bend: number };
+type Seg = { from: Pt; to: Pt; via: Pt };
 type Pending = { from: Pt; land: Pt; outcome: Outcome; penalty: boolean; rest: Lie };
 
 type Opts = {
@@ -83,14 +83,14 @@ export const useGolf = ({ spec, par, wind, sound, touch, done, onHoled }: Opts) 
   const [ball, setBall] = useState<Pt>(done ? pin : tee);
   const [roll, setRoll] = useState(false);
   const [segs, setSegs] = useState<Seg[]>([]);
-  const [bend, setBend] = useState(0);
+  const [via, setVia] = useState<Pt | null>(null);
   const [strokes, setStrokes] = useState(done ?? 0);
   const [lie, setLie] = useState<Lie>(done ? 'holed' : 'tee');
   const [note, setNote] = useState<{ text: string; at: Pt; good: boolean } | null>(null);
   const [pending, setPending] = useState<Pending | null>(null);
   const [pull, setPull] = useState<Pt | null>(null);
   const [focused, setFocused] = useState(false);
-  const flight = useFlight(ball, 1000, roll, bend);
+  const flight = useFlight(ball, 1000, roll, 0, via);
   const { pos, lift, flying } = flight;
   const onHoledRef = useRef(onHoled);
   onHoledRef.current = onHoled;
@@ -128,7 +128,7 @@ export const useGolf = ({ spec, par, wind, sound, touch, done, onHoled }: Opts) 
     if (penalty) {
       const t = setTimeout(() => {
         setRoll(true);
-        setBend(0);
+        setVia(null);
         setBall(from);
         setSegs((sg) => sg.slice(0, -1));
       }, 750);
@@ -137,7 +137,7 @@ export const useGolf = ({ spec, par, wind, sound, touch, done, onHoled }: Opts) 
     if (outcome === 'holed' || outcome === 'picked') {
       setLie('holed');
       setRoll(true);
-      setBend(0);
+      setVia(null);
       setBall(pin);
       onHoledRef.current?.(outcome === 'picked' ? MAX_PER_HOLE : strokes);
       return;
@@ -177,6 +177,8 @@ export const useGolf = ({ spec, par, wind, sound, touch, done, onHoled }: Opts) 
     const from = ball;
     let land: Pt;
     let outcome: Outcome;
+    // where the ball was hit before the wind got to it; the flight leaves toward this
+    let aimed: Pt;
 
     if (putting) {
       const a = dir + deg(gauss() * 1.4);
@@ -188,6 +190,7 @@ export const useGolf = ({ spec, par, wind, sound, touch, done, onHoled }: Opts) 
       const across = Math.abs((pin[0] - from[0]) * uy - (pin[1] - from[1]) * ux);
       const passes = along > 0 && along <= len && across < cup;
       land = [from[0] + ux * len, from[1] + uy * len];
+      aimed = land;
       if ((passes && len - along < 32) || dist(land, pin) < cup * 0.9) {
         // over the cup at a gentle pace, or dying on the lip: it drops
         land = pin;
@@ -198,12 +201,14 @@ export const useGolf = ({ spec, par, wind, sound, touch, done, onHoled }: Opts) 
       setRoll(true);
     } else {
       const play = LIE_PLAY[lie];
-      const carry = power * maxCarry * play.carry * (1 + gauss() * 0.06);
-      // more club, less control
-      const a = dir + deg(gauss() * (1 + 4.5 * power * power) * play.spread);
-      const drift = (carry * wind.mph) / 100 * 0.9;
+      const carry = power * maxCarry * play.carry * (1 + gauss() * 0.04);
+      // more club, less control; kept small enough that the wind is what you read
+      const a = dir + deg(gauss() * (0.6 + 2.2 * power * power) * play.spread);
+      // wind always pushes the same way, by an amount that grows with the carry
+      const drift = (carry * wind.mph) / 100 * 1.25;
       const wr = deg(wind.deg);
-      land = [from[0] + Math.cos(a) * carry + Math.cos(wr) * drift, from[1] + Math.sin(a) * carry + Math.sin(wr) * drift];
+      aimed = [from[0] + Math.cos(a) * carry, from[1] + Math.sin(a) * carry];
+      land = [aimed[0] + Math.cos(wr) * drift, aimed[1] + Math.sin(wr) * drift];
       const tree = (spec.trees ?? []).find(([x, y, r]) => dist(land, [x, y]) < r);
       if (!inside(land)) {
         outcome = 'ob';
@@ -229,9 +234,10 @@ export const useGolf = ({ spec, par, wind, sound, touch, done, onHoled }: Opts) 
     if (sound) sfx.tock(putting ? 0.35 : Math.min(1, 0.35 + power * 0.7));
     setNote(null);
     setStrokes(outcome === 'picked' ? MAX_PER_HOLE : next);
-    const curve = putting ? 0 : 0.12;
-    setBend(curve);
-    setSegs((sg) => [...sg, { from, to: land, bend: curve }]);
+    // the ball leaves along the aim and the wind bends it onto where it lands
+    const bendTo: Pt = putting ? [(from[0] + land[0]) / 2, (from[1] + land[1]) / 2] : [(from[0] + aimed[0]) / 2, (from[1] + aimed[1]) / 2];
+    setVia(bendTo);
+    setSegs((sg) => [...sg, { from, to: land, via: bendTo }]);
     const settled = lieAt(spec, land);
     const rest: Lie = outcome === 'lipped' ? 'green' : settled === 'water' ? lie : (settled as Lie);
     setPending({ from, land, outcome, penalty: penalty && outcome !== 'picked', rest });
@@ -284,7 +290,7 @@ export const useGolf = ({ spec, par, wind, sound, touch, done, onHoled }: Opts) 
 
   const reset = () => {
     setRoll(true);
-    setBend(0);
+    setVia(null);
     setBall(tee);
     setSegs([]);
     setStrokes(0);

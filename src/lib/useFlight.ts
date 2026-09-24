@@ -26,7 +26,7 @@ type Flight = { pos: Pt; lift: number; progress: number; origin: Pt; ctrl: Pt };
  * stays on the ground and slows the way a putt does. `flying` is true from the
  * moment the target changes until the ball is at rest on it.
  */
-export const useFlight = (target: Pt, ms = 900, roll = false, bend = 0) => {
+export const useFlight = (target: Pt, ms = 900, roll = false, bend = 0, via: Pt | null = null) => {
   const [state, setState] = useState<Flight>({ pos: target, lift: 0, progress: 1, origin: target, ctrl: target });
   const at = useRef<Pt>(target);
   const raf = useRef(0);
@@ -36,10 +36,11 @@ export const useFlight = (target: Pt, ms = 900, roll = false, bend = 0) => {
     if (same(start, target)) return;
     if (reduced()) {
       at.current = target;
-      setState({ pos: target, lift: 0, progress: 1, origin: start, ctrl: flightControl(start, target, bend) });
+      setState({ pos: target, lift: 0, progress: 1, origin: start, ctrl: via ?? flightControl(start, target, bend) });
       return;
     }
-    const ctrl = flightControl(start, target, bend);
+    // an explicit control point lets a shot leave toward the aim and bend with the wind
+    const ctrl = via ?? flightControl(start, target, bend);
     const d = Math.hypot(target[0] - start[0], target[1] - start[1]);
     const dur = roll ? Math.min(1600, Math.max(500, d * 9)) : Math.min(1400, Math.max(450, ms * (d / 300)));
     const t0 = performance.now();
@@ -55,7 +56,7 @@ export const useFlight = (target: Pt, ms = 900, roll = false, bend = 0) => {
     };
     raf.current = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(raf.current);
-  }, [target, ms, roll, bend]);
+  }, [target, ms, roll, bend, via]);
 
   return { ...state, flying: !same(state.pos, target) };
 };
