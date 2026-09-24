@@ -1,4 +1,5 @@
 import type { HoleSpec } from '@/components/course/CourseArt';
+import type { Pt } from '@/lib/course';
 
 export const RESUME = '/Yash_Gandhi_Resume.pdf';
 
@@ -127,6 +128,38 @@ export const heroSpec: HoleSpec = {
   yards: 412,
   seed: 11,
   hillCount: 5,
+};
+
+/** Hole 1 stood up for phones: tee at the bottom centre, so a pull-back runs straight down with room to spare. */
+export const heroSpecTall: HoleSpec = {
+  w: 400,
+  h: 620,
+  line: [[200, 585], [190, 470], [150, 360], [190, 250], [245, 130]],
+  width: 70,
+  shots: [[248, 122]],
+  green: [245, 125, 52, 38],
+  bunkers: [[118, 300, 24, 14], [300, 152, 18, 11], [190, 78, 20, 10], [118, 468, 20, 12]],
+  water: [[322, 410, 40, 52]],
+  trees: [[345, 598, 18], [342, 545, 20], [68, 150, 22], [40, 382, 16], [362, 205, 18], [362, 478, 14]],
+  yards: 412,
+  seed: 11,
+  hillCount: 4,
+};
+
+export type CaddieNote = { dot: Pt; end: Pt; text: Pt; lines: string[]; anchor: 'start' | 'end'; size: number };
+
+/** Hole 1's caddie notes for each layout, in drawing units. */
+export const heroNotes: Record<'wide' | 'tall', CaddieNote[]> = {
+  wide: [
+    { dot: [124, 488], end: [168, 522], text: [172, 530], lines: ['you are here: Toronto'], anchor: 'start', size: 30 },
+    { dot: [330, 300], end: [238, 236], text: [232, 228], lines: ['Business & CS,', 'Western'], anchor: 'end', size: 28 },
+    { dot: [566, 226], end: [560, 150], text: [560, 116], lines: ['just played: AI engineering', "@ T-Mobile, summer '26"], anchor: 'end', size: 28 },
+  ],
+  tall: [
+    { dot: [186, 590], end: [140, 568], text: [134, 552], lines: ['you are here:', 'Toronto'], anchor: 'end', size: 24 },
+    { dot: [118, 300], end: [74, 262], text: [18, 234], lines: ['Business & CS,', 'Western'], anchor: 'start', size: 24 },
+    { dot: [194, 262], end: [244, 270], text: [250, 262], lines: ['just played:', 'AI engineering', "@ T-Mobile, '26"], anchor: 'start', size: 23 },
+  ],
 };
 
 export const specs: Record<string, HoleSpec> = {

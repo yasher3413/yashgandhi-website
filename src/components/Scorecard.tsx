@@ -121,7 +121,7 @@ const Scorecard = () => {
   const cartToPar = carded.reduce((a, c) => a + c.s - c.par, 0);
 
   return (
-    <nav aria-label="Sections" className="fixed bottom-3 sm:bottom-4 inset-x-0 z-50 flex justify-center px-3 pointer-events-none">
+    <nav aria-label="Sections" className={`fixed bottom-3 sm:bottom-4 inset-x-0 z-50 flex px-3 pointer-events-none ${collapsed ? 'justify-end sm:justify-center' : 'justify-center'}`}>
       <div className="flex flex-col pointer-events-auto">
       <div className="flex items-end justify-between px-1">
         <ModeSwitch />
@@ -145,7 +145,7 @@ const Scorecard = () => {
           aria-expanded="false"
           aria-controls="scorecard-table"
           aria-label={`Show scorecard. On hole ${active}, ${HOLES[active - 1].short}.`}
-          className="self-center flex items-center gap-3 bg-card text-ink rounded-[4px] pl-2 pr-3 py-1.5 shadow-[0_18px_40px_-12px_rgba(0,0,0,0.6),0_2px_6px_-2px_rgba(0,0,0,0.35)] hover:-translate-y-0.5 transition-transform"
+          className="self-end sm:self-center flex items-center gap-3 bg-card text-ink rounded-[4px] pl-2 pr-3 py-1.5 shadow-[0_18px_40px_-12px_rgba(0,0,0,0.6),0_2px_6px_-2px_rgba(0,0,0,0.35)] hover:-translate-y-0.5 transition-transform"
         >
           <span className="relative w-8 h-8 grid place-items-center font-display text-xl" style={{ fontWeight: 800 }}>
             {active}

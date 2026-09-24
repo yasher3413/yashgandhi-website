@@ -1,19 +1,18 @@
 import React, { useState } from 'react';
-import CourseArt, { pinOf, teeOf } from './course/CourseArt';
+import CourseArt, { pinOf } from './course/CourseArt';
 import PlayLayer from './course/PlayLayer';
 import { SoundToggle, WindVane } from './course/Controls';
 import HoleOut from './HoleOut';
-import { heroSpec as spec, RESUME } from '@/content';
+import { heroNotes, heroSpec, heroSpecTall, RESUME } from '@/content';
+import type { HoleSpec } from './course/CourseArt';
 import { useGolf } from '@/lib/useGolf';
 import { useRound } from '@/lib/round';
 import { useMedia } from '@/lib/useMedia';
 import { scoreName, withArticle } from '@/lib/golf';
 
-const tee = teeOf(spec);
-const pin = pinOf(spec);
-
-/** Hole 1 itself. Remounted when the visitor changes how they get around. */
-const FirstTee = () => {
+/** Hole 1 itself. Remounted when the visitor changes how they get around, or the layout flips. */
+const FirstTee = ({ spec, tall }: { spec: HoleSpec; tall: boolean }) => {
+  const pin = pinOf(spec);
   const round = useRound();
   const cart = round.mode === 'cart';
   const touch = useMedia('(hover: none)');
@@ -44,19 +43,17 @@ const FirstTee = () => {
             <PlayLayer spec={spec} g={g}>
               {/* caddie notes */}
               <g pointerEvents="none" fontFamily="'Nanum Pen Script', cursive" fill="#f3f6ef" stroke="#0c2e1e" strokeWidth="4" strokeLinejoin="round" paintOrder="stroke">
-                <line x1={tee[0] + 14} y1={tee[1] + 10} x2={tee[0] + 58} y2={tee[1] + 44} stroke="#f3f6ef" strokeOpacity="0.55" />
-                <circle cx={tee[0] + 14} cy={tee[1] + 10} r="2" />
-                <text x={tee[0] + 62} y={tee[1] + 52} fontSize="30">you are here: Toronto</text>
-
-                <line x1="330" y1="300" x2="238" y2="236" stroke="#f3f6ef" strokeOpacity="0.55" />
-                <circle cx="330" cy="300" r="2" />
-                <text x="232" y="228" fontSize="28" textAnchor="end">Business &amp; CS,</text>
-                <text x="232" y="256" fontSize="28" textAnchor="end">Western</text>
-
-                <line x1="566" y1="226" x2="560" y2="150" stroke="#f3f6ef" strokeOpacity="0.55" />
-                <circle cx="566" cy="226" r="2" />
-                <text x="560" y="116" fontSize="28" textAnchor="end">just played: AI engineering</text>
-                <text x="560" y="142" fontSize="28" textAnchor="end">@ T-Mobile, summer &apos;26</text>
+                {heroNotes[tall ? 'tall' : 'wide'].map((n, i) => (
+                  <g key={i}>
+                    <line x1={n.dot[0]} y1={n.dot[1]} x2={n.end[0]} y2={n.end[1]} stroke="#f3f6ef" strokeOpacity="0.55" />
+                    <circle cx={n.dot[0]} cy={n.dot[1]} r="2" />
+                    {n.lines.map((line, j) => (
+                      <text key={j} x={n.text[0]} y={n.text[1] + j * n.size * 0.95} fontSize={n.size} textAnchor={n.anchor}>
+                        {line}
+                      </text>
+                    ))}
+                  </g>
+                ))}
               </g>
 
               {/* the flag doubles as the resume; the pole and cup stay playable */}
@@ -115,6 +112,8 @@ const FirstTee = () => {
 const Hero = () => {
   const round = useRound();
   const lockedContact = round.mode === 'cart' && round.unlocked < 9;
+  // phones get the hole stood upright, tee at the bottom centre
+  const tall = useMedia('(max-width: 639px)');
 
   return (
     <section id="home" data-hole={1} className="relative min-h-[100svh] overflow-hidden">
@@ -127,7 +126,6 @@ const Hero = () => {
           </h1>
           <p className="mt-7 text-xl sm:text-2xl text-chalk font-medium max-w-md">Engineer &amp; Operations Analyst</p>
           <p className="mt-2 text-base text-moss">Toronto, Canada</p>
-          <p className="sm:hidden mt-3 font-pencil text-2xl leading-tight text-sand">just played: AI engineering @ T-Mobile, summer &apos;26</p>
           <div className="mt-9 flex flex-wrap gap-3">
             <a href={RESUME} target="_blank" rel="noopener noreferrer" className="btn-flag">
               <svg width="14" height="18" viewBox="0 0 14 18" aria-hidden="true">
@@ -143,7 +141,7 @@ const Hero = () => {
         </div>
 
         <div className="lg:col-span-7 relative">
-          <FirstTee key={round.mode ?? 'none'} />
+          <FirstTee key={`${round.mode ?? 'none'}-${tall}`} spec={tall ? heroSpecTall : heroSpec} tall={tall} />
         </div>
       </div>
     </section>
