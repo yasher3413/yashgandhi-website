@@ -177,11 +177,27 @@ const CartPath = ({ to }: { to: number }) => {
     if (!el || !box || !next) return;
 
     const settleAt = () => next.getBoundingClientRect().top + window.scrollY + (wide ? 104 : -8);
+    const maxScroll = () => document.documentElement.scrollHeight - window.innerHeight;
     if (reduced()) {
       window.scrollTo(0, settleAt());
       arrived();
       return;
     }
+
+    // The camera is scripted frame by frame, so the page's CSS smooth scrolling
+    // has to step aside: mobile browsers otherwise start a smooth scroll on every
+    // frame and cancel it on the next, and the page never moves.
+    const html = document.documentElement;
+    const prevBehavior = html.style.scrollBehavior;
+    html.style.scrollBehavior = 'auto';
+
+    // A thumb or wheel on the page mid-drive hands the camera back.
+    let handsOff = false;
+    const takeOver = () => {
+      handsOff = true;
+    };
+    window.addEventListener('touchstart', takeOver, { passive: true });
+    window.addEventListener('wheel', takeOver, { passive: true });
 
     const len = el.getTotalLength();
     const DRIVE = Math.min(5200, Math.max(3400, len * 7));
@@ -189,6 +205,14 @@ const CartPath = ({ to }: { to: number }) => {
     let t0 = 0;
     let raf = 0;
     let settleStart = 0;
+    // track the camera ourselves: phones round scrollY, which stalls a lerp that re-reads it
+    let cam = window.scrollY;
+
+    const finish = () => {
+      html.style.scrollBehavior = prevBehavior;
+      window.removeEventListener('touchstart', takeOver);
+      window.removeEventListener('wheel', takeOver);
+    };
 
     const frame = (now: number) => {
       if (!t0) t0 = now;
@@ -201,13 +225,18 @@ const CartPath = ({ to }: { to: number }) => {
 
       // the camera follows the cart, then settles where the next hole is playable
       const boxTop = box.getBoundingClientRect().top + window.scrollY;
-      const target = t < 1 ? boxTop + p.y - window.innerHeight * 0.45 : settleAt();
-      const y = window.scrollY;
-      window.scrollTo(0, y + (target - y) * (t < 1 ? 0.12 : 0.1));
+      const target = Math.max(0, Math.min(maxScroll(), t < 1 ? boxTop + p.y - window.innerHeight * 0.45 : settleAt()));
+      if (!handsOff) {
+        cam += (target - cam) * (t < 1 ? 0.12 : 0.14);
+        if (t >= 1 && Math.abs(target - cam) < 1) cam = target;
+        window.scrollTo(0, Math.round(cam));
+      }
 
       if (t >= 1) {
         if (!settleStart) settleStart = now;
-        if (Math.abs(target - window.scrollY) < 2 || now - settleStart > 1500) {
+        if (handsOff || cam === target || now - settleStart > 2500) {
+          if (!handsOff) window.scrollTo(0, Math.round(target));
+          finish();
           arrived();
           return;
         }
@@ -215,7 +244,10 @@ const CartPath = ({ to }: { to: number }) => {
       raf = requestAnimationFrame(frame);
     };
     raf = requestAnimationFrame(frame);
-    return () => cancelAnimationFrame(raf);
+    return () => {
+      cancelAnimationFrame(raf);
+      finish();
+    };
   }, [active, to, arrived, wide]);
 
   return (
