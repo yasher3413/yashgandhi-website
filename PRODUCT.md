@@ -12,7 +12,7 @@ Next.js 14 (pages router), React 18, Tailwind 3, framer-motion. Deployed on Verc
 
 ## Purpose
 
-Personal site of Yash Gandhi: a Business & Computer Science student at Western University, based in Toronto, and an incoming AI Engineering Intern at T-Mobile (Summer 2026).
+Personal site of Yash Gandhi: a Business & Computer Science student at Western University, based in Toronto, who was an AI Engineering Intern at T-Mobile in Summer 2026.
 
 ## Audience
 

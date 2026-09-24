@@ -151,7 +151,7 @@ Motion follows the ball: flights arc and slow down as they land, pencil strokes 
 A turf-and-card-stock palette: greens do the structural work, chalk white draws the lines, and red is the only loud colour.
 
 ### Primary
-- **Pin Flag Red** (flag): the flag on every green, the primary action button (Resume, Book call), the "Now playing" equaliser and label, the Strava live dot, the current role's dates, the active scorecard column heading, the pencil circle around the current hole, text selection, and the text caret. Hover darkens it to **Flag Red, Pressed** (flag-deep) on the subscribe button.
+- **Pin Flag Red** (flag): the flag on every green, the primary action button (Resume, Book call), the "Now playing" equaliser and label, the Strava live dot, the active scorecard column heading, the pencil circle around the current hole, text selection, and the text caret. Hover darkens it to **Flag Red, Pressed** (flag-deep) on the subscribe button.
 
 ### Secondary
 - **Bunker Sand** (sand): bunkers in the diagrams, every handwritten caddie note in running text, text that turns sand on hover for display-type list items (projects, contact), and the 2px focus ring throughout the site.
@@ -170,12 +170,12 @@ A turf-and-card-stock palette: greens do the structural work, chalk white draws 
 - **Chalk** (chalk): headings, all diagram linework, leader lines, the ball's flight path, and the aim reticle. At 15% opacity it draws the rules between items; at 40% it draws the outline button's border.
 - **Mist** (mist): body text on the ground.
 - **Moss** (moss): secondary text such as locations, tags, captions, yardage lines and field labels.
-- **Card Stock** (card): the scorecard, the tee sheet, logo tiles, and the subscribe input.
+- **Card Stock** (card): the scorecard, the tee sheet, and the subscribe input. Company logos sit directly on the rough as transparent PNGs, with no tile.
 - **Card Ink** (ink): text and grid ruling on card stock (15% for grid lines, 20% under the date tabs). A solid ink fill marks the selected tee-sheet date.
 - **Ballpoint** (pencil-ink): the player's handwritten scores on the scorecard and their name on the tee sheet. It appears only on card stock.
 
 ### Named Rules
-**The Pin Rule.** Red marks where the ball is going (the single primary action) or what is happening now (live data, the current hole, the current role). Never use it for decoration, section colour, or a second button on the same view.
+**The Pin Rule.** Red marks where the ball is going (the single primary action) or what is happening now (live data, the current hole). Never use it for decoration, section colour, or a second button on the same view.
 
 **The One Ground Rule.** The page is always rough green. Sections are separated by space and hairline rules, never by background bands or alternating colours.
 
@@ -234,7 +234,7 @@ Inside diagrams, depth is drawn rather than cast: a blurred deep-rough halo unde
 
 ## Shapes
 
-Corners are nearly square, like printed stock: 3px for buttons and album art, 4px for plaques, cards, logo tiles and panels, 2px for the book cover. The one exception is the Spotify embed, which keeps 12px to match the player's own corners. Round shapes belong to the course: the ball, the cup, the live dot, and the organic blob outlines of greens, bunkers and ponds (seeded, irregular, never perfect ovals). Lines are hairlines: 1px chalk rules, 1px leader lines at 55–60% opacity, a dashed aim line (6/5) and a dotted flight path (2/6, round caps). The hand-drawn ellipse that circles the active hole is the one freehand shape.
+Corners are nearly square, like printed stock: 3px for buttons and album art, 4px for plaques, cards and panels, 2px for the book cover. The one exception is the Spotify embed, which keeps 12px to match the player's own corners. Round shapes belong to the course: the ball, the cup, the live dot, and the organic blob outlines of greens, bunkers and ponds (seeded, irregular, never perfect ovals). Lines are hairlines: 1px chalk rules, 1px leader lines at 55–60% opacity, a dashed aim line (6/5) and a dotted flight path (2/6, round caps). The hand-drawn ellipse that circles the active hole is the one freehand shape.
 
 ## Components
 

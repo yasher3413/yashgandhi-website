@@ -19,12 +19,12 @@ export const interests = ['Hockey', 'Golf', 'F1', 'Travelling', 'Writing', 'Weig
 
 export const experiences = [
   {
-    title: 'Incoming AI Engineering Intern',
+    title: 'AI Engineering Intern',
     company: 'T-Mobile',
     period: 'Summer 2026',
-    description: 'Building AI agents for the T-Life app, website, & customer support.',
+    description: 'Built AI agents for the T-Life app, website, & customer support.',
     technologies: ['Python', 'Machine Learning', 'AI', 'SDKs'],
-    logo: '/images/TMobile-logo.png',
+    logo: '/images/tmobile-mark.png',
     website: 'https://www.t-mobile.com/',
   },
   {
@@ -33,7 +33,7 @@ export const experiences = [
     period: 'Summer 2025',
     description: 'Series C startup serving as a saving app that empowers users to spend less, save more, and build credit.',
     technologies: ['Jira', 'Smartsheet', 'Snowflake', 'SQL', 'Python'],
-    logo: '/images/super-logo.png',
+    logo: '/images/super-mark.png',
     website: 'https://super.com',
   },
   {
@@ -42,7 +42,7 @@ export const experiences = [
     period: '2023 - 2025',
     description: 'Seed-stage startup focused on creating a free-to-play sports betting platform for users to win cash prizes without any risk.',
     technologies: ['React', 'TypeScript', 'Node.js', 'Airtable'],
-    logo: '/images/hottakes-logo.jpeg',
+    logo: '/images/hottakes-mark.png',
     website: 'https://hottakes.com/',
   },
   {
@@ -51,23 +51,23 @@ export const experiences = [
     period: 'Summer 2024',
     description: 'Contributed to due diligence reports for potential acquisitions, including financial modeling and market research.',
     technologies: ['MS Excel', 'MS Word', 'MS PowerPoint'],
-    logo: '/images/lynwood-logo.png',
+    logo: '/images/lynwood-mark.png',
     website: 'https://www.cbinsights.com/company/lynwood-succession',
   },
 ];
 
 export const projects = [
   {
-    title: 'Pawfect Pitch',
-    description: "A web application that helps pet owners find the perfect pitch for their pet's story. Built with Python and TypeScript for NWHacks 2025.",
-    link: 'https://github.com/hunterchen7/pawfect-pitch',
-    tags: ['Python', 'TypeScript', 'React', 'Flask'],
+    title: 'FlipperClaw',
+    description: "An open-source pocket AI agent. A Flipper Zero is the screen and controls, an ESP32-S3 is the brain. LLM replies stream straight to the Flipper, and the agent can use its NFC, Sub-GHz and IR radios as tools.",
+    link: 'https://github.com/yasher3413/flipperclaw',
+    tags: ['C++', 'C', 'ESP32-S3', 'Flipper Zero', 'LLM agents'],
   },
   {
-    title: 'ClothingFinder',
-    description: 'A Python web application that recommends outfits based on weather and personal wardrobe. Features weather integration and smart matching algorithms.',
-    link: 'https://github.com/yasher3413/ClothingFinder',
-    tags: ['Python', 'Flask', 'OpenWeather API', 'SQLite'],
+    title: 'twig',
+    description: 'A lightweight macOS browser for people who keep 100+ tabs open. Built on the native webview instead of bundled Chromium, it puts idle tabs to sleep so they cost nothing until you come back to them.',
+    link: 'https://github.com/yasher3413/twig',
+    tags: ['Rust', 'TypeScript', 'Tauri 2', 'macOS'],
   },
   {
     title: 'Personal Assistant',

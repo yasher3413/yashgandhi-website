@@ -55,7 +55,7 @@ const FirstTee = () => {
 
                 <line x1="566" y1="226" x2="560" y2="150" stroke="#f3f6ef" strokeOpacity="0.55" />
                 <circle cx="566" cy="226" r="2" />
-                <text x="560" y="116" fontSize="28" textAnchor="end">next up: AI engineering</text>
+                <text x="560" y="116" fontSize="28" textAnchor="end">just played: AI engineering</text>
                 <text x="560" y="142" fontSize="28" textAnchor="end">@ T-Mobile, summer &apos;26</text>
               </g>
 
@@ -127,7 +127,7 @@ const Hero = () => {
           </h1>
           <p className="mt-7 text-xl sm:text-2xl text-chalk font-medium max-w-md">Engineer &amp; Operations Analyst</p>
           <p className="mt-2 text-base text-moss">Toronto, Canada</p>
-          <p className="sm:hidden mt-3 font-pencil text-2xl leading-tight text-sand">next up: AI engineering @ T-Mobile, summer &apos;26</p>
+          <p className="sm:hidden mt-3 font-pencil text-2xl leading-tight text-sand">just played: AI engineering @ T-Mobile, summer &apos;26</p>
           <div className="mt-9 flex flex-wrap gap-3">
             <a href={RESUME} target="_blank" rel="noopener noreferrer" className="btn-flag">
               <svg width="14" height="18" viewBox="0 0 14 18" aria-hidden="true">
